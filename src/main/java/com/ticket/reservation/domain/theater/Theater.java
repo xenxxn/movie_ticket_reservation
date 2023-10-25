@@ -1,6 +1,6 @@
 package com.ticket.reservation.domain.theater;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class Theater {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "THEATER_ID")
     private Long id;
 
     @Column(name = "NAME")
@@ -31,9 +31,9 @@ public class Theater {
     private String location;
 
     @Column(name = "OPEN_TIME")
-    private LocalDateTime openTime;
+    private LocalTime openTime;
 
     @Column(name = "CLOSE_TIME")
-    private LocalDateTime closeTime;
+    private LocalTime closeTime;
 
 }

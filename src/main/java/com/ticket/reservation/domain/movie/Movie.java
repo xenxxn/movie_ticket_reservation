@@ -1,11 +1,11 @@
 package com.ticket.reservation.domain.movie;
 
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,10 +18,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "MOVIE_ID")
     private Long id;
 
     @Column(name = "TITLE")
@@ -46,10 +47,10 @@ public class Movie {
     private String runningTime;
 
     @Column(name = "RELEASE_DATE")
-    private LocalDateTime releaseDate;
+    private LocalDate releaseDate;
 
     @Column(name = "END_DATE")
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
 
 }

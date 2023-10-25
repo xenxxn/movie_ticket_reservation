@@ -3,6 +3,7 @@ package com.ticket.reservation.domain.showtime;
 import com.ticket.reservation.domain.movie.Movie;
 import com.ticket.reservation.domain.theater.Theater;
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +25,7 @@ import lombok.NoArgsConstructor;
 public class Showtime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "SHOWTIME_ID")
     private Long id;
 
     @ManyToOne
