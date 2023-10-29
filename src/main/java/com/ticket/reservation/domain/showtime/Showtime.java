@@ -37,4 +37,9 @@ public class Showtime {
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+
+    public void addShowtime(Movie movie, Theater theater) {
+        this.movie = movie;
+        this.theater = theater;
+    }
 }
