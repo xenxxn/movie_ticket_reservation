@@ -17,13 +17,13 @@ public class MovieController {
   private final MovieService movieService;
 
   @GetMapping("/info")
-  public ResponseEntity<?> movieSearchInfo(@RequestParam String title) {
+  public ResponseEntity movieSearchInfo(@RequestParam String title) {
     Movie movie = movieService.searchMovie(title);
     return ResponseEntity.ok(movie);
   }
 
   @GetMapping("/list")
-  public ResponseEntity<?> movieSearchList(@RequestParam String word){
+  public ResponseEntity movieSearchList(@RequestParam String word){
     List<Movie> list = movieService.searchMovieList(word);
     return ResponseEntity.ok(list);
   }

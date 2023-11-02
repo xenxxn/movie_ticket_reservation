@@ -14,7 +14,7 @@ public class TheaterController {
   private final TheaterService theaterService;
 
   @GetMapping("/list")
-  public ResponseEntity<?> searchTheaterByName(String name) {
+  public ResponseEntity searchTheaterByName(String name) {
     List<Theater> list = theaterService.searchTheaterByName(name);
     return ResponseEntity.ok(list);
   }

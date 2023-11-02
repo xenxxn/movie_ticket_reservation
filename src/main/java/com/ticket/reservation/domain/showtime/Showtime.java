@@ -42,4 +42,13 @@ public class Showtime {
         this.movie = movie;
         this.theater = theater;
     }
+
+    //NPE 발생 방지를 위해 entity 클래스 내부에 조인된 entity id 값 가져오는 메소드 생성
+    public Long getMovieId() {
+        return movie.getId();
+    }
+
+    public Long getTheaterId() {
+        return theater.getId();
+    }
 }

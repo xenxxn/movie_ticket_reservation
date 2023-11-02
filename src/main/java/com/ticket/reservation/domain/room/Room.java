@@ -34,7 +34,10 @@ public class Room {
     @Column(name = "NAME")
     private String name;
 
-    //business logic
+    public Long getTheaterId() {
+        return theater.getId();
+    }
+
     public void addRoom(Theater theater) {
         this.theater = theater;
     }
