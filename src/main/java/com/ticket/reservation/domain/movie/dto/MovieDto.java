@@ -33,5 +33,4 @@ public class MovieDto {
         .endDate(movie.getEndDate())
         .build();
   }
-
 }
