@@ -1,13 +1,13 @@
 package com.ticket.reservation.domain.movie;
 
 import com.ticket.reservation.domain.movie.dto.MovieDto;
+import com.ticket.reservation.domain.movie.dto.MovieEditInput;
 import com.ticket.reservation.domain.movie.dto.MovieInput;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,13 +22,13 @@ public class MovieController {
   private final MovieService movieService;
 
   @GetMapping("/info")
-  public ResponseEntity movieSearchInfo(@RequestParam String title) {
+  public ResponseEntity<Movie> movieSearchInfo(@RequestParam String title) {
     Movie movie = movieService.searchMovie(title);
     return ResponseEntity.ok(movie);
   }
 
   @GetMapping("/list")
-  public ResponseEntity movieSearchList(@RequestParam String word){
+  public ResponseEntity<List> movieSearchList(@RequestParam String word){
     List<Movie> list = movieService.searchMovieList(word);
     return ResponseEntity.ok(list);
   }
@@ -36,6 +36,11 @@ public class MovieController {
   @PostMapping()
   public MovieDto addMovie(@RequestBody MovieInput movieInput) {
     return movieService.addMovie(movieInput);
+  }
+
+  @PostMapping("/modification")
+  public MovieDto editMovie(@RequestBody MovieEditInput movieEditInput) {
+    return movieService.editMovie(movieEditInput);
   }
 
 }

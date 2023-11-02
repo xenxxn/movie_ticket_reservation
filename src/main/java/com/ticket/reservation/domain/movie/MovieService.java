@@ -1,6 +1,7 @@
 package com.ticket.reservation.domain.movie;
 
 import com.ticket.reservation.domain.movie.dto.MovieDto;
+import com.ticket.reservation.domain.movie.dto.MovieEditInput;
 import com.ticket.reservation.domain.movie.dto.MovieInput;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import javax.transaction.Transactional;
 public class MovieService {
     private final MovieRepository movieRepository;
 
+    @Transactional
     public MovieDto addMovie(MovieInput movieInput) {
         Movie movie = MovieInput.toEntity(movieInput);
         movie = movieRepository.save(movie);
@@ -35,5 +37,23 @@ public class MovieService {
         return searchResults;
     }
 
+    @Transactional
+    public MovieDto editMovie(MovieEditInput movieEditInput) {
+        Movie movie = movieRepository.findById(movieEditInput.getId())
+            .orElseThrow(() -> new RuntimeException("해당 영화는 존재하지 않습니다."));
 
+        Movie editMovie = Movie.builder()
+            .id(movie.getId())
+            .title(movieEditInput.getTitle())
+            .country(movieEditInput.getCountry())
+            .genre(movieEditInput.getGenre())
+            .information(movieEditInput.getInformation())
+            .grade(movieEditInput.getGrade())
+            .runningTime(movieEditInput.getRunningTime())
+            .releaseDate(movieEditInput.getReleaseDate())
+            .endDate(movieEditInput.getEndDate())
+            .build();
+        Movie saved = movieRepository.save(editMovie);
+        return MovieDto.fromEntity(saved);
+    }
 }
