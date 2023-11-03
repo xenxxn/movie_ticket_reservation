@@ -19,10 +19,9 @@ public class MovieService {
     private final MovieRepository movieRepository;
 
     @Transactional
-    public MovieDto addMovie(MovieInput movieInput) {
+    public Movie addMovie(MovieInput movieInput) {
         Movie movie = MovieInput.toEntity(movieInput);
-        movie = movieRepository.save(movie);
-        return MovieDto.fromEntity(movie);
+        return movieRepository.save(movie);
     }
 
     public Movie searchMovie(String title) {

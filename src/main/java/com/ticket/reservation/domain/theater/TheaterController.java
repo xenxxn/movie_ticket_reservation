@@ -1,9 +1,13 @@
 package com.ticket.reservation.domain.theater;
 
+import com.ticket.reservation.domain.theater.dto.TheaterDto;
+import com.ticket.reservation.domain.theater.dto.TheaterInput;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,5 +21,11 @@ public class TheaterController {
   public ResponseEntity searchTheaterByName(String name) {
     List<Theater> list = theaterService.searchTheaterByName(name);
     return ResponseEntity.ok(list);
+  }
+
+  @PostMapping()
+  public TheaterDto addTheater(@RequestBody TheaterInput theaterInput) {
+    Theater theater = theaterService.addTheater(theaterInput);
+    return TheaterDto.fromEntity(theater);
   }
 }
