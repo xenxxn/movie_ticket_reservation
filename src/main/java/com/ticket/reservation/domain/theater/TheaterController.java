@@ -1,6 +1,7 @@
 package com.ticket.reservation.domain.theater;
 
 import com.ticket.reservation.domain.theater.dto.TheaterDto;
+import com.ticket.reservation.domain.theater.dto.TheaterEditInput;
 import com.ticket.reservation.domain.theater.dto.TheaterInput;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -27,5 +28,10 @@ public class TheaterController {
   public TheaterDto addTheater(@RequestBody TheaterInput theaterInput) {
     Theater theater = theaterService.addTheater(theaterInput);
     return TheaterDto.fromEntity(theater);
+  }
+
+  @PostMapping("/modification")
+  public TheaterDto editTheater(@RequestBody TheaterEditInput theaterEditInput) {
+    return theaterService.editTheater(theaterEditInput);
   }
 }

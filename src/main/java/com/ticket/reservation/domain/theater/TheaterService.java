@@ -1,5 +1,7 @@
 package com.ticket.reservation.domain.theater;
 
+import com.ticket.reservation.domain.theater.dto.TheaterDto;
+import com.ticket.reservation.domain.theater.dto.TheaterEditInput;
 import com.ticket.reservation.domain.theater.dto.TheaterInput;
 import java.util.List;
 import java.util.Optional;
@@ -24,5 +26,22 @@ public class TheaterService {
   public Theater addTheater(TheaterInput theaterInput) {
     Theater theater = TheaterInput.toEntity(theaterInput);
     return theaterRepository.save(theater);
+  }
+
+  @Transactional
+  public TheaterDto editTheater(TheaterEditInput theaterEditInput) {
+    Theater theater = theaterRepository.findById(theaterEditInput.getId())
+        .orElseThrow(() -> new RuntimeException("해당 영화관은 존재하지 않습니다."));
+
+    Theater editTheater = Theater.builder()
+        .id(theater.getId())
+        .name(theaterEditInput.getName())
+        .location(theaterEditInput.getLocation())
+        .openTime(theaterEditInput.getOpenTime())
+        .closeTime(theaterEditInput.getCloseTime())
+        .build();
+
+    Theater saved = theaterRepository.save(editTheater);
+    return TheaterDto.fromEntity(saved);
   }
 }

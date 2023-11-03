@@ -12,6 +12,7 @@ import lombok.Getter;
 public class MovieDto {
   private Long id;
   private String title;
+  private String director;
   private String country;
   private String genre;
   private String information;
@@ -24,6 +25,7 @@ public class MovieDto {
     return MovieDto.builder()
         .id(movie.getId())
         .title(movie.getTitle())
+        .director(movie.getDirector())
         .country(movie.getCountry())
         .genre(movie.getGenre())
         .information(movie.getInformation())

@@ -44,6 +44,7 @@ public class MovieService {
         Movie editMovie = Movie.builder()
             .id(movie.getId())
             .title(movieEditInput.getTitle())
+            .director(movieEditInput.getDirector())
             .country(movieEditInput.getCountry())
             .genre(movieEditInput.getGenre())
             .information(movieEditInput.getInformation())
