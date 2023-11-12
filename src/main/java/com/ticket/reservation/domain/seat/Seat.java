@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "SEAT_ID")
     private Long id;
 
     @ManyToOne

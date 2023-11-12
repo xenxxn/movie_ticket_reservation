@@ -3,6 +3,7 @@ package com.ticket.reservation.domain.movie;
 import com.ticket.reservation.domain.movie.dto.MovieDto;
 import com.ticket.reservation.domain.movie.dto.MovieEditInput;
 import com.ticket.reservation.domain.movie.dto.MovieInput;
+import com.ticket.reservation.domain.movie.dto.MovieOutput;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +25,14 @@ public class MovieController {
   private final MovieService movieService;
 
   @GetMapping
-  public ResponseEntity<Movie> movieSearchInfo(@RequestParam String searchWord) {
-    Movie movie = movieService.searchMovie(searchWord);
+  public ResponseEntity<MovieOutput> movieSearchInfo(@RequestParam String searchWord) {
+    MovieOutput movie = movieService.searchMovie(searchWord);
     return ResponseEntity.ok(movie);
   }
 
   @GetMapping("/{title}")
-  public ResponseEntity<List<MovieDto>> movieSearchList(@PathVariable String title){
-    List<MovieDto> list = movieService.searchMovieList(title);
+  public ResponseEntity<List<MovieOutput>> movieSearchList(@PathVariable String title){
+    List<MovieOutput> list = movieService.searchMovieList(title);
     return ResponseEntity.ok(list);
   }
 

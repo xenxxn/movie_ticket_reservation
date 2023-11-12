@@ -3,9 +3,9 @@ package com.ticket.reservation.domain.movie;
 import com.ticket.reservation.domain.movie.dto.MovieDto;
 import com.ticket.reservation.domain.movie.dto.MovieEditInput;
 import com.ticket.reservation.domain.movie.dto.MovieInput;
+import com.ticket.reservation.domain.movie.dto.MovieOutput;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import javax.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,22 +26,21 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
-    public Movie searchMovie(String title) {
-        return movieRepository.findByTitle(title).orElseThrow(() -> new RuntimeException("검색 결과가 없습니다."));
+    public MovieOutput searchMovie(String title) {
+        Movie movie = movieRepository.findByTitle(title);
+        if (movie == null){
+            throw new NoResultException("검색 결과가 없습니다.");
+        }
+        MovieDto movieDto = MovieDto.fromEntity(movie);
+        return MovieOutput.toResponse(movieDto);
     }
 
-    public List<MovieDto> searchMovieList(String title) {
-        List<Movie> searchResults = movieRepository.findByTitleContaining(title);
-        List<MovieDto> movieDtos = new ArrayList<>();
-        for (Movie movie : searchResults) {
-            MovieDto movieDto = MovieDto.fromEntity(movie);
-            movieDtos.add(movieDto);
+    public List<MovieOutput> searchMovieList(String title) {
+        List<MovieDto> movies = movieRepository.findByTitleContaining(title);
+        if (movies.isEmpty()){
+            throw new NoResultException("검색 결과가 없습니다.");
         }
-
-        if (movieDtos.isEmpty()) {
-            throw new NoResultException("영화 검색 결과가 없습니다.");
-        }
-        return movieDtos;
+        return MovieOutput.toResponse(movies);
     }
 
 
