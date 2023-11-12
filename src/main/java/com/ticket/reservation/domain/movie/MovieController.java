@@ -28,8 +28,9 @@ public class MovieController {
   }
 
   @GetMapping("/list")
-  public ResponseEntity<List> movieSearchList(@RequestParam String word){
-    List<Movie> list = movieService.searchMovieList(word);
+  public ResponseEntity<List<MovieDto>> movieSearchList(@RequestParam String word){
+    List<MovieDto> list = movieService.searchMovieList(word);
+    log.info("movie dto list");
     return ResponseEntity.ok(list);
   }
 

@@ -3,6 +3,7 @@ package com.ticket.reservation.domain.movie;
 import com.ticket.reservation.domain.movie.dto.MovieDto;
 import com.ticket.reservation.domain.movie.dto.MovieEditInput;
 import com.ticket.reservation.domain.movie.dto.MovieInput;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +29,18 @@ public class MovieService {
         return movieRepository.findByTitle(title).orElseThrow(() -> new RuntimeException("검색 결과가 없습니다."));
     }
 
-    public List<Movie> searchMovieList(String title) {
+    public List<MovieDto> searchMovieList(String title) {
         List<Movie> searchResults = movieRepository.findByTitleContaining(title);
-        if (searchResults.isEmpty()) {
-            throw new RuntimeException("검색 결과가 없습니다2.");
+        List<MovieDto> movieDtos = new ArrayList<>();
+        for (Movie movie : searchResults) {
+            MovieDto movieDto = MovieDto.fromEntity(movie);
+            movieDtos.add(movieDto);
         }
-        return searchResults;
+
+        if (movieDtos.isEmpty()) {
+            throw new RuntimeException("영화 검색 결과가 없습니다.");
+        }
+        return movieDtos;
     }
 
     @Transactional
