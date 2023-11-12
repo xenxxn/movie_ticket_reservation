@@ -43,23 +43,12 @@ public class MovieService {
         return movieDtos;
     }
 
+
     @Transactional
     public MovieDto editMovie(MovieEditInput movieEditInput) {
         Movie movie = movieRepository.findById(movieEditInput.getId())
             .orElseThrow(() -> new RuntimeException("해당 영화는 존재하지 않습니다."));
-
-        Movie editMovie = Movie.builder()
-            .id(movie.getId())
-            .title(movieEditInput.getTitle())
-            .director(movieEditInput.getDirector())
-            .country(movieEditInput.getCountry())
-            .genre(movieEditInput.getGenre())
-            .information(movieEditInput.getInformation())
-            .grade(movieEditInput.getGrade())
-            .runningTime(movieEditInput.getRunningTime())
-            .releaseDate(movieEditInput.getReleaseDate())
-            .endDate(movieEditInput.getEndDate())
-            .build();
+        Movie editMovie = MovieEditInput.toEntity(movieEditInput);
         Movie saved = movieRepository.save(editMovie);
         return MovieDto.fromEntity(saved);
     }

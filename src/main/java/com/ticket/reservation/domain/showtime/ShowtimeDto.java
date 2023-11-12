@@ -17,6 +17,7 @@ public class ShowtimeDto {
   private LocalDateTime startTime;
   private LocalDateTime endTime;
 
+  //TODO : movie, theater service 와 controller 완료 후에 사용할 메소드
 //  public void addShowtime(Movie movie, Theater theater) {
 //    this.movie = movie;
 //    this.theater = theater;
