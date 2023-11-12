@@ -34,6 +34,7 @@ public class Room {
     @Column(name = "NAME")
     private String name;
 
+    //getTheater를 했을 때, 만약 Null 이라면 getId() 호출 시 NPE가 발생하기때문에 NPE방지를 위한 메소드 생성
     public Long getTheaterId() {
         return theater.getId();
     }

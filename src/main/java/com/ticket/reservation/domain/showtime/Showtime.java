@@ -43,7 +43,7 @@ public class Showtime {
         this.theater = theater;
     }
 
-    //NPE 발생 방지를 위해 entity 클래스 내부에 조인된 entity id 값 가져오는 메소드 생성
+    //getMovie를 했을 때, 만약 Null 이라면 getId() 호출 시 NPE가 발생하기때문에 NPE방지를 위한 메소드 생성
     public Long getMovieId() {
         return movie.getId();
     }
