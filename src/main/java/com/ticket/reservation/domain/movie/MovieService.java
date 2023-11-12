@@ -46,7 +46,7 @@ public class MovieService {
 
     @Transactional
     public MovieDto editMovie(MovieEditInput movieEditInput) {
-        Movie movie = movieRepository.findById(movieEditInput.getId())
+        movieRepository.findById(movieEditInput.getId())
             .orElseThrow(() -> new RuntimeException("해당 영화는 존재하지 않습니다."));
         Movie editMovie = MovieEditInput.toEntity(movieEditInput);
         Movie saved = movieRepository.save(editMovie);
