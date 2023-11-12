@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,31 +18,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@RequestMapping("/movie")
+@RequestMapping("/movies")
 @RequiredArgsConstructor
 public class MovieController {
   private final MovieService movieService;
 
-  @GetMapping("/info")
-  public ResponseEntity<Movie> movieSearchInfo(@RequestParam String title) {
-    Movie movie = movieService.searchMovie(title);
+  @GetMapping
+  public ResponseEntity<Movie> movieSearchInfo(@RequestParam String searchWord) {
+    Movie movie = movieService.searchMovie(searchWord);
     return ResponseEntity.ok(movie);
   }
 
-  @GetMapping("/list")
-  public ResponseEntity<List<MovieDto>> movieSearchList(@RequestParam String word){
-    List<MovieDto> list = movieService.searchMovieList(word);
-    log.info("movie dto list");
+  @GetMapping("/{title}")
+  public ResponseEntity<List<MovieDto>> movieSearchList(@PathVariable String title){
+    List<MovieDto> list = movieService.searchMovieList(title);
     return ResponseEntity.ok(list);
   }
 
-  @PostMapping()
+  @PostMapping
   public MovieDto addMovie(@RequestBody MovieInput movieInput) {
     Movie movie = movieService.addMovie(movieInput);
     return MovieDto.fromEntity(movie);
   }
 
-  @PostMapping("/modification")
+  @PutMapping ("/modification")
   public MovieDto editMovie(@RequestBody MovieEditInput movieEditInput) {
     return movieService.editMovie(movieEditInput);
   }

@@ -4,7 +4,7 @@ import com.ticket.reservation.domain.theater.dto.TheaterDto;
 import com.ticket.reservation.domain.theater.dto.TheaterEditInput;
 import com.ticket.reservation.domain.theater.dto.TheaterInput;
 import java.util.List;
-import java.util.Optional;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class TheaterService {
   public List<Theater> searchTheaterByName(String name) {
     List<Theater> searchTheaterResults = theaterRepository.findByNameContaining(name);
     if (searchTheaterResults.isEmpty()) {
-      throw new RuntimeException("찾으시는 영화관이 없습니다.");
+      throw new NoResultException("찾으시는 영화관이 없습니다.");
     }
     return searchTheaterResults;
   }
@@ -31,7 +31,7 @@ public class TheaterService {
   @Transactional
   public TheaterDto editTheater(TheaterEditInput theaterEditInput) {
     Theater theater = theaterRepository.findById(theaterEditInput.getId())
-        .orElseThrow(() -> new RuntimeException("해당 영화관은 존재하지 않습니다."));
+        .orElseThrow(() -> new NoResultException("해당 영화관은 존재하지 않습니다."));
 
     Theater editTheater = Theater.builder()
         .id(theater.getId())

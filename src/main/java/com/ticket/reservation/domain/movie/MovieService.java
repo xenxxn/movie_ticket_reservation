@@ -6,6 +6,7 @@ import com.ticket.reservation.domain.movie.dto.MovieInput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class MovieService {
         }
 
         if (movieDtos.isEmpty()) {
-            throw new RuntimeException("영화 검색 결과가 없습니다.");
+            throw new NoResultException("영화 검색 결과가 없습니다.");
         }
         return movieDtos;
     }
@@ -47,7 +48,7 @@ public class MovieService {
     @Transactional
     public MovieDto editMovie(MovieEditInput movieEditInput) {
         movieRepository.findById(movieEditInput.getId())
-            .orElseThrow(() -> new RuntimeException("해당 영화는 존재하지 않습니다."));
+            .orElseThrow(() -> new NoResultException("해당 영화는 존재하지 않습니다."));
         Movie editMovie = MovieEditInput.toEntity(movieEditInput);
         Movie saved = movieRepository.save(editMovie);
         return MovieDto.fromEntity(saved);
