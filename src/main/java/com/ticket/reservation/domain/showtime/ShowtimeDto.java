@@ -1,7 +1,5 @@
 package com.ticket.reservation.domain.showtime;
 
-import com.ticket.reservation.domain.movie.Movie;
-import com.ticket.reservation.domain.theater.Theater;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

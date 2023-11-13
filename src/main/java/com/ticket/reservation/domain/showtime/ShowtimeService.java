@@ -2,7 +2,6 @@ package com.ticket.reservation.domain.showtime;
 
 import com.ticket.reservation.domain.movie.Movie;
 import com.ticket.reservation.domain.movie.MovieRepository;
-import com.ticket.reservation.domain.movie.dto.MovieDto;
 import com.ticket.reservation.domain.theater.Theater;
 import com.ticket.reservation.domain.theater.TheaterRepository;
 import lombok.RequiredArgsConstructor;

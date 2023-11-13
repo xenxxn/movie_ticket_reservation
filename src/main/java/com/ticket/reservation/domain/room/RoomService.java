@@ -1,6 +1,5 @@
 package com.ticket.reservation.domain.room;
 
-import com.ticket.reservation.domain.room.dto.RoomDto;
 import com.ticket.reservation.domain.room.dto.RoomInput;
 import com.ticket.reservation.domain.theater.Theater;
 import com.ticket.reservation.domain.theater.TheaterRepository;
