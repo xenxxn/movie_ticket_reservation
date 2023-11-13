@@ -22,4 +22,10 @@ public class RoomDto {
         .name(room.getName())
         .build();
   }
+
+  public static Room toEntity(RoomDto roomDto) {
+    return Room.builder()
+        .id(roomDto.getId())
+        .build();
+  }
 }

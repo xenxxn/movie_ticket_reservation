@@ -1,12 +1,14 @@
 package com.ticket.reservation.domain.room;
 
 import com.ticket.reservation.domain.room.dto.RoomDto;
+import com.ticket.reservation.domain.room.dto.RoomEditInput;
 import com.ticket.reservation.domain.room.dto.RoomInput;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,5 +29,10 @@ public class RoomController {
   public ResponseEntity<String> deleteRoom(@RequestBody Room room, @PathVariable Long roomId) {
     roomService.deleteRoom(room);
     return ResponseEntity.ok("Room deleted successfully");
+  }
+
+  @PutMapping("/modification/{roomId}")
+  public ResponseEntity<RoomDto> editRoom(@PathVariable("roomId") Long roomId,@RequestBody RoomEditInput roomEditInput) {
+    return ResponseEntity.ok(roomService.editRoom(roomEditInput));
   }
 }
