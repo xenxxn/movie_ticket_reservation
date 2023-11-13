@@ -28,6 +28,7 @@ public class MovieService {
 
     public MovieOutput searchMovie(String title) {
         Movie movie = movieRepository.findByTitle(title);
+        System.out.println("movie = " + movie);
         if (movie == null){
             throw new NoResultException("검색 결과가 없습니다.");
         }
@@ -37,6 +38,7 @@ public class MovieService {
 
     public List<MovieOutput> searchMovieList(String title) {
         List<MovieDto> movies = movieRepository.findByTitleContaining(title);
+        System.out.println("movies = " + movies);
         if (movies.isEmpty()){
             throw new NoResultException("검색 결과가 없습니다.");
         }

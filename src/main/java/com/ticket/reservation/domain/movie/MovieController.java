@@ -24,27 +24,26 @@ import org.springframework.web.bind.annotation.RestController;
 public class MovieController {
   private final MovieService movieService;
 
-  @GetMapping
-  public ResponseEntity<MovieOutput> movieSearchInfo(@RequestParam String searchWord) {
-    MovieOutput movie = movieService.searchMovie(searchWord);
+
+  @GetMapping("/{title}")
+  public ResponseEntity<MovieOutput> movieSearchInfo(@PathVariable String title) {
+    MovieOutput movie = movieService.searchMovie(title);
     return ResponseEntity.ok(movie);
   }
 
-  @GetMapping("/{title}")
-  public ResponseEntity<List<MovieOutput>> movieSearchList(@PathVariable String title){
-    List<MovieOutput> list = movieService.searchMovieList(title);
-    return ResponseEntity.ok(list);
+  @GetMapping("/list/{title}")
+  public List<MovieOutput> movieSearchList(@PathVariable String title){
+    return movieService.searchMovieList(title);
   }
-
   @PostMapping
   public MovieDto addMovie(@RequestBody MovieInput movieInput) {
     Movie movie = movieService.addMovie(movieInput);
     return MovieDto.fromEntity(movie);
   }
 
-  @PutMapping ("/modification")
-  public MovieDto editMovie(@RequestBody MovieEditInput movieEditInput) {
-    return movieService.editMovie(movieEditInput);
+  @PutMapping("/modification/{id}")
+  public ResponseEntity<MovieDto> editMovie(@PathVariable("id") Long id, @RequestBody MovieEditInput movieEditInput) {
+    return ResponseEntity.ok(movieService.editMovie(movieEditInput));
   }
 
 }
