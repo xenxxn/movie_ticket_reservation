@@ -3,8 +3,10 @@ package com.ticket.reservation.domain.room;
 import com.ticket.reservation.domain.room.dto.RoomDto;
 import com.ticket.reservation.domain.room.dto.RoomEditInput;
 import com.ticket.reservation.domain.room.dto.RoomInput;
+import com.ticket.reservation.domain.room.dto.RoomOutput;
 import com.ticket.reservation.domain.theater.Theater;
 import com.ticket.reservation.domain.theater.TheaterRepository;
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
@@ -47,5 +49,13 @@ public class RoomService {
     }
     roomRepository.save(room);
     return RoomDto.fromEntity(room);
+  }
+
+  public List<RoomOutput> searchRoomList(Long theaterId){
+    Theater theater = theaterRepository.findById(theaterId)
+        .orElseThrow(() -> new NoResultException("존재하지 않는 영화관입니다."));
+    List<Room> rooms = roomRepository.findRoomByTheater(theater);
+    List<RoomDto> roomDtos = RoomDto.toResponseList(rooms);
+    return RoomOutput.toResponse(roomDtos);
   }
 }

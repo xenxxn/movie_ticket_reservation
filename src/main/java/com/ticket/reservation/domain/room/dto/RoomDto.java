@@ -1,6 +1,8 @@
 package com.ticket.reservation.domain.room.dto;
 
 import com.ticket.reservation.domain.room.Room;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,5 +29,11 @@ public class RoomDto {
     return Room.builder()
         .id(roomDto.getId())
         .build();
+  }
+
+  public static List<RoomDto> toResponseList(List<Room> rooms) {
+    return rooms.stream()
+        .map(RoomDto::fromEntity)
+        .collect(Collectors.toList());
   }
 }
