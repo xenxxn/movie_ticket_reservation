@@ -37,7 +37,7 @@ public class Room {
 
     public Long getTheaterId() {
         if (theater == null) {
-            throw new NoResultException("상영관이 존재하지 않습니다.");
+            throw new NoResultException("영화관이 존재하지 않습니다.");
         }
         return theater.getId();
     }

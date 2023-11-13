@@ -4,10 +4,12 @@ import com.ticket.reservation.domain.room.Room;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor
 public class RoomInput {
   private String name;
 

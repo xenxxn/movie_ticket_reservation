@@ -24,7 +24,7 @@ public class RoomService {
     Room room = RoomInput.toEntity(roomInput);
     boolean isExistsTheater = theaterRepository.existsById(room.getTheaterId());
     if (!isExistsTheater) {
-      throw new NoResultException("존재하지 않는 상영관입니다.");
+      throw new NoResultException("존재하지 않는 영화관입니다.");
     }
       return roomRepository.save(room);
   }
@@ -36,7 +36,7 @@ public class RoomService {
       room.removeRoom(theaterResult);
       roomRepository.delete(room);
     } else {
-      throw new NoResultException("존재하지 않는 상영관입니다.");
+      throw new NoResultException("존재하지 않는 영화관입니다.");
     }
   }
 
@@ -56,6 +56,6 @@ public class RoomService {
         .orElseThrow(() -> new NoResultException("존재하지 않는 영화관입니다."));
     List<Room> rooms = roomRepository.findRoomByTheater(theater);
     List<RoomDto> roomDtos = RoomDto.toResponseList(rooms);
-    return RoomOutput.toResponse(roomDtos);
+    return RoomOutput.toResponseList(roomDtos);
   }
 }

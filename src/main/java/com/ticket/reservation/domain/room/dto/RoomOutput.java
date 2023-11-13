@@ -19,7 +19,7 @@ public class RoomOutput {
         .build();
   }
 
-  public static List<RoomOutput> toResponse(List<RoomDto> roomDtos) {
+  public static List<RoomOutput> toResponseList(List<RoomDto> roomDtos) {
     return roomDtos.stream()
         .map(RoomOutput::toResponse)
         .collect(Collectors.toList());
