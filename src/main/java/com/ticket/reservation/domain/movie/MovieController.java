@@ -42,7 +42,7 @@ public class MovieController {
 
   @PutMapping("/modification/{id}")
   public ResponseEntity<MovieDto> editMovie(@PathVariable("id") Long id, @RequestBody MovieEditInput movieEditInput) {
-    return ResponseEntity.ok(movieService.editMovie(movieEditInput));
+    return ResponseEntity.ok(movieService.editMovie(id, movieEditInput));
   }
 
 }

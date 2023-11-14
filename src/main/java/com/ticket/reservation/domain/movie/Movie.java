@@ -1,5 +1,6 @@
 package com.ticket.reservation.domain.movie;
 
+import com.ticket.reservation.domain.movie.dto.MovieEditInput;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,5 +54,35 @@ public class Movie {
     @Column(name = "END_DATE")
     private LocalDate endDate;
 
+
+    public void updateMovie(MovieEditInput movieEditInput) {
+        if (movieEditInput.getTitle() != null) {
+            this.title = movieEditInput.getTitle();
+        }
+        if (movieEditInput.getDirector() != null) {
+            this.director = movieEditInput.getDirector();
+        }
+        if (movieEditInput.getCountry() != null) {
+            this.country = movieEditInput.getCountry();
+        }
+        if (movieEditInput.getGenre() != null) {
+            this.genre = movieEditInput.getGenre();
+        }
+        if (movieEditInput.getInformation() != null) {
+            this.information = movieEditInput.getInformation();
+        }
+        if (movieEditInput.getGrade() != null) {
+            this.grade = movieEditInput.getGrade();
+        }
+        if (movieEditInput.getRunningTime() != null) {
+            this.runningTime = movieEditInput.getRunningTime();
+        }
+        if (movieEditInput.getReleaseDate() != null) {
+            this.releaseDate = movieEditInput.getReleaseDate();
+        }
+        if (movieEditInput.getEndDate() != null) {
+            this.endDate = movieEditInput.getEndDate();
+        }
+    }
 
 }
