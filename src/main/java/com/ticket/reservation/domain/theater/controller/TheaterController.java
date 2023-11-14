@@ -1,5 +1,7 @@
-package com.ticket.reservation.domain.theater;
+package com.ticket.reservation.domain.theater.controller;
 
+import com.ticket.reservation.domain.theater.entity.Theater;
+import com.ticket.reservation.domain.theater.service.TheaterService;
 import com.ticket.reservation.domain.theater.dto.TheaterDto;
 import com.ticket.reservation.domain.theater.dto.TheaterEditInput;
 import com.ticket.reservation.domain.theater.dto.TheaterInput;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

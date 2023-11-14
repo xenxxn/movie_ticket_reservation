@@ -1,9 +1,12 @@
-package com.ticket.reservation.domain.showtime;
+package com.ticket.reservation.domain.showtime.service;
 
-import com.ticket.reservation.domain.movie.Movie;
-import com.ticket.reservation.domain.movie.MovieRepository;
-import com.ticket.reservation.domain.theater.Theater;
-import com.ticket.reservation.domain.theater.TheaterRepository;
+import com.ticket.reservation.domain.movie.entity.Movie;
+import com.ticket.reservation.domain.movie.repository.MovieRepository;
+import com.ticket.reservation.domain.showtime.dto.ShowtimeDto;
+import com.ticket.reservation.domain.showtime.entity.Showtime;
+import com.ticket.reservation.domain.showtime.repository.ShowtimeRepository;
+import com.ticket.reservation.domain.theater.entity.Theater;
+import com.ticket.reservation.domain.theater.repository.TheaterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

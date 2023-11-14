@@ -1,11 +1,13 @@
-package com.ticket.reservation.domain.room;
+package com.ticket.reservation.domain.room.service;
 
 import com.ticket.reservation.domain.room.dto.RoomDto;
 import com.ticket.reservation.domain.room.dto.RoomEditInput;
 import com.ticket.reservation.domain.room.dto.RoomInput;
 import com.ticket.reservation.domain.room.dto.RoomOutput;
-import com.ticket.reservation.domain.theater.Theater;
-import com.ticket.reservation.domain.theater.TheaterRepository;
+import com.ticket.reservation.domain.room.entity.Room;
+import com.ticket.reservation.domain.room.repository.RoomRepository;
+import com.ticket.reservation.domain.theater.entity.Theater;
+import com.ticket.reservation.domain.theater.repository.TheaterRepository;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.NoResultException;

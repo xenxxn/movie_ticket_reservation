@@ -1,9 +1,11 @@
-package com.ticket.reservation.domain.seat;
+package com.ticket.reservation.domain.seat.controller;
 
+import com.ticket.reservation.domain.seat.service.SeatService;
 import com.ticket.reservation.domain.seat.dto.SeatDto;
 import com.ticket.reservation.domain.seat.dto.SeatEditInput;
 import com.ticket.reservation.domain.seat.dto.SeatInput;
 import com.ticket.reservation.domain.seat.dto.SeatOutput;
+import com.ticket.reservation.domain.seat.entity.Seat;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

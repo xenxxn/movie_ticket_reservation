@@ -1,9 +1,11 @@
-package com.ticket.reservation.domain.theater;
+package com.ticket.reservation.domain.theater.service;
 
+import com.ticket.reservation.domain.theater.entity.Theater;
 import com.ticket.reservation.domain.theater.dto.TheaterDto;
 import com.ticket.reservation.domain.theater.dto.TheaterEditInput;
 import com.ticket.reservation.domain.theater.dto.TheaterInput;
 import com.ticket.reservation.domain.theater.dto.TheaterOutput;
+import com.ticket.reservation.domain.theater.repository.TheaterRepository;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;

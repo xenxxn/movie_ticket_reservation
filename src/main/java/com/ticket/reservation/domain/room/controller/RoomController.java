@@ -1,9 +1,11 @@
-package com.ticket.reservation.domain.room;
+package com.ticket.reservation.domain.room.controller;
 
+import com.ticket.reservation.domain.room.service.RoomService;
 import com.ticket.reservation.domain.room.dto.RoomDto;
 import com.ticket.reservation.domain.room.dto.RoomEditInput;
 import com.ticket.reservation.domain.room.dto.RoomInput;
 import com.ticket.reservation.domain.room.dto.RoomOutput;
+import com.ticket.reservation.domain.room.entity.Room;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

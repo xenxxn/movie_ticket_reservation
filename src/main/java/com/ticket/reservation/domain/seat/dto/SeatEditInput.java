@@ -1,7 +1,7 @@
 package com.ticket.reservation.domain.seat.dto;
 
-import com.ticket.reservation.domain.room.Room;
-import com.ticket.reservation.domain.seat.Seat;
+import com.ticket.reservation.domain.room.entity.Room;
+import com.ticket.reservation.domain.seat.entity.Seat;
 import com.ticket.reservation.domain.seat.SeatStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
-package com.ticket.reservation.domain.room;
+package com.ticket.reservation.domain.room.entity;
 
-import com.ticket.reservation.domain.theater.Theater;
+import com.ticket.reservation.domain.theater.entity.Theater;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

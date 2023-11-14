@@ -1,6 +1,5 @@
 package com.ticket.reservation.domain.theater.dto;
 
-import com.ticket.reservation.domain.theater.Theater;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;

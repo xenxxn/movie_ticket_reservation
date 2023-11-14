@@ -1,5 +1,8 @@
-package com.ticket.reservation.domain.showtime;
+package com.ticket.reservation.domain.showtime.controller;
 
+import com.ticket.reservation.domain.showtime.entity.Showtime;
+import com.ticket.reservation.domain.showtime.service.ShowtimeService;
+import com.ticket.reservation.domain.showtime.dto.ShowtimeDto;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

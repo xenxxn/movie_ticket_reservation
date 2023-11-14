@@ -1,7 +1,7 @@
-package com.ticket.reservation.domain.showtime;
+package com.ticket.reservation.domain.showtime.entity;
 
-import com.ticket.reservation.domain.movie.Movie;
-import com.ticket.reservation.domain.theater.Theater;
+import com.ticket.reservation.domain.movie.entity.Movie;
+import com.ticket.reservation.domain.theater.entity.Theater;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;

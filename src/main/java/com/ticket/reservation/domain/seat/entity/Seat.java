@@ -1,6 +1,7 @@
-package com.ticket.reservation.domain.seat;
+package com.ticket.reservation.domain.seat.entity;
 
-import com.ticket.reservation.domain.room.Room;
+import com.ticket.reservation.domain.room.entity.Room;
+import com.ticket.reservation.domain.seat.SeatStatus;
 import com.ticket.reservation.domain.seat.dto.SeatEditInput;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +42,7 @@ public class Seat {
     @Column(name = "NUMBER")
     private int number;
 
-    @Column(name = "RESERVED")
+    @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
     private SeatStatus status; //RESERVED, UNRESERVED
 

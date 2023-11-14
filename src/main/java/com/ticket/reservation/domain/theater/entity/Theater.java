@@ -1,4 +1,4 @@
-package com.ticket.reservation.domain.theater;
+package com.ticket.reservation.domain.theater.entity;
 
 import java.time.LocalTime;
 import javax.persistence.Column;

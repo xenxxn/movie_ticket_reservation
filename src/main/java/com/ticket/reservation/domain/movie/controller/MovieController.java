@@ -1,9 +1,11 @@
-package com.ticket.reservation.domain.movie;
+package com.ticket.reservation.domain.movie.controller;
 
+import com.ticket.reservation.domain.movie.service.MovieService;
 import com.ticket.reservation.domain.movie.dto.MovieDto;
 import com.ticket.reservation.domain.movie.dto.MovieEditInput;
 import com.ticket.reservation.domain.movie.dto.MovieInput;
 import com.ticket.reservation.domain.movie.dto.MovieOutput;
+import com.ticket.reservation.domain.movie.entity.Movie;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

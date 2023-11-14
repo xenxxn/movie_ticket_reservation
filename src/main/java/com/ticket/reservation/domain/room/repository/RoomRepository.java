@@ -1,6 +1,7 @@
-package com.ticket.reservation.domain.room;
+package com.ticket.reservation.domain.room.repository;
 
-import com.ticket.reservation.domain.theater.Theater;
+import com.ticket.reservation.domain.room.entity.Room;
+import com.ticket.reservation.domain.theater.entity.Theater;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

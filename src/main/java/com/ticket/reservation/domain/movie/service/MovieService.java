@@ -1,9 +1,11 @@
-package com.ticket.reservation.domain.movie;
+package com.ticket.reservation.domain.movie.service;
 
 import com.ticket.reservation.domain.movie.dto.MovieDto;
 import com.ticket.reservation.domain.movie.dto.MovieEditInput;
 import com.ticket.reservation.domain.movie.dto.MovieInput;
 import com.ticket.reservation.domain.movie.dto.MovieOutput;
+import com.ticket.reservation.domain.movie.entity.Movie;
+import com.ticket.reservation.domain.movie.repository.MovieRepository;
 import java.util.List;
 import javax.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;

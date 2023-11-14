@@ -1,6 +1,6 @@
 package com.ticket.reservation.domain.seat.dto;
 
-import com.ticket.reservation.domain.seat.Seat;
+import com.ticket.reservation.domain.seat.entity.Seat;
 import com.ticket.reservation.domain.seat.SeatStatus;
 import java.util.List;
 import java.util.stream.Collectors;

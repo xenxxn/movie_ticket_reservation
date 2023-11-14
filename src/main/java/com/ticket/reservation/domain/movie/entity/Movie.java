@@ -1,4 +1,4 @@
-package com.ticket.reservation.domain.movie;
+package com.ticket.reservation.domain.movie.entity;
 
 import com.ticket.reservation.domain.movie.dto.MovieEditInput;
 import java.time.LocalDate;

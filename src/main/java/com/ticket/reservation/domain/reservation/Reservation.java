@@ -1,8 +1,8 @@
 //package com.ticket.reservation.domain.reservation;
 //
 //import com.ticket.reservation.domain.member.Member;
-//import com.ticket.reservation.domain.movie.Movie;
-//import com.ticket.reservation.domain.showtime.Showtime;
+//import com.ticket.reservation.domain.movie.entity.Movie;
+//import com.ticket.reservation.domain.showtime.entity.Showtime;
 //
 //import javax.persistence.*;
 //
