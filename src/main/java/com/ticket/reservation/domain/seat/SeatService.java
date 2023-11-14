@@ -3,10 +3,10 @@ package com.ticket.reservation.domain.seat;
 import com.ticket.reservation.domain.room.Room;
 import com.ticket.reservation.domain.room.RoomRepository;
 import com.ticket.reservation.domain.seat.dto.SeatDto;
+import com.ticket.reservation.domain.seat.dto.SeatEditInput;
 import com.ticket.reservation.domain.seat.dto.SeatInput;
 import com.ticket.reservation.domain.seat.dto.SeatOutput;
 import java.util.List;
-import java.util.Optional;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -58,5 +58,12 @@ public class SeatService {
     return SeatOutput.toResponseList(seatDtos);
   }
 
-
+  @Transactional
+  public SeatDto editSeat(Long seatId, SeatEditInput seatEditInput) {
+    Seat seat = seatRepository.findById(seatId)
+        .orElseThrow(() -> new NoResultException("해당 좌석을 찾을 수 없습니다."));
+    seat.updateSeat(seatEditInput);
+    seatRepository.save(seat);
+    return SeatDto.fromEntity(seat);
+  }
 }
