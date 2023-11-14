@@ -2,7 +2,10 @@ package com.ticket.reservation.domain.seat;
 
 import com.ticket.reservation.domain.room.Room;
 import com.ticket.reservation.domain.room.RoomRepository;
+import com.ticket.reservation.domain.seat.dto.SeatDto;
 import com.ticket.reservation.domain.seat.dto.SeatInput;
+import com.ticket.reservation.domain.seat.dto.SeatOutput;
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
@@ -33,6 +36,7 @@ public class SeatService {
     return seatRepository.existsByRowAndNumber(seat.getRow(), seat.getNumber());
   }
 
+  @Transactional
   public void deleteSeat(Seat seat) {
     Seat findSeat = seatRepository.findById(seat.getId())
         .orElseThrow(() -> new NoResultException("존재하지 않는 좌석입니다."));
@@ -45,5 +49,14 @@ public class SeatService {
       throw new NoResultException("존재하지 않는 상영관입니다.");
     }
   }
+
+  public List<SeatOutput> searchSeatList(Long roomId) {
+    Room room = roomRepository.findById(roomId)
+        .orElseThrow(() -> new NoResultException("존재하지 않는 상영관입니다."));
+    List<Seat> seats = seatRepository.findSeatByRoomOrderByRow(room);
+    List<SeatDto> seatDtos = SeatDto.toResponseList(seats);
+    return SeatOutput.toResponseList(seatDtos);
+  }
+
 
 }

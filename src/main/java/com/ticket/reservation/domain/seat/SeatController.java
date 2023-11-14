@@ -2,9 +2,12 @@ package com.ticket.reservation.domain.seat;
 
 import com.ticket.reservation.domain.seat.dto.SeatDto;
 import com.ticket.reservation.domain.seat.dto.SeatInput;
+import com.ticket.reservation.domain.seat.dto.SeatOutput;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,4 +32,8 @@ public class SeatController {
     return ResponseEntity.ok("Seat deleted successfully");
   }
 
+  @GetMapping("/list/{roomId}")
+  public ResponseEntity<List<SeatOutput>> searchSeatList(@PathVariable Long roomId) {
+    return ResponseEntity.ok(seatService.searchSeatList(roomId));
+  }
 }
