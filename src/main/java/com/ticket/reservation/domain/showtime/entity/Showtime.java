@@ -1,6 +1,7 @@
 package com.ticket.reservation.domain.showtime.entity;
 
 import com.ticket.reservation.domain.movie.entity.Movie;
+import com.ticket.reservation.domain.showtime.dto.ShowtimeEditInput;
 import com.ticket.reservation.domain.theater.entity.Theater;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NoResultException;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,13 +44,26 @@ public class Showtime {
         this.movie = movie;
         this.theater = theater;
     }
+    public void updateShowtime(ShowtimeEditInput showtimeEditInput) {
+        if (showtimeEditInput.getStartTime() != null) {
+            this.startTime = showtimeEditInput.getStartTime();
+        }
+        if (showtimeEditInput.getEndTime() != null) {
+            this.endTime = showtimeEditInput.getEndTime();
+        }
+    }
 
-    //getMovie를 했을 때, 만약 Null 이라면 getId() 호출 시 NPE가 발생하기때문에 NPE방지를 위한 메소드 생성
     public Long getMovieId() {
+        if (movie == null){
+            throw new NoResultException("해당 영화가 존재하지 않습니다.");
+        }
         return movie.getId();
     }
 
     public Long getTheaterId() {
+        if (theater == null) {
+            throw new NoResultException("해당 영화관이 존재하지 않습니다.");
+        }
         return theater.getId();
     }
 }

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class MovieEditInput {
+
   private Long id;
   private String title;
   private String director;
@@ -22,18 +23,4 @@ public class MovieEditInput {
   private String runningTime;
   private LocalDate releaseDate;
   private LocalDate endDate;
-
-  public static Movie toEntity(MovieEditInput movieEditInput) {
-    return Movie.builder()
-        .title(movieEditInput.getTitle())
-        .director(movieEditInput.getDirector())
-        .country(movieEditInput.getCountry())
-        .genre(movieEditInput.getGenre())
-        .information(movieEditInput.getInformation())
-        .grade(movieEditInput.getGrade())
-        .runningTime(movieEditInput.getRunningTime())
-        .releaseDate(movieEditInput.getReleaseDate())
-        .endDate(movieEditInput.getEndDate())
-        .build();
-  }
 }
