@@ -24,8 +24,8 @@ public class SeatController {
   }
 
   @DeleteMapping("/{seatId}")
-  public ResponseEntity<String> deleteSeat(@PathVariable Long seatId) {
-    seatService.deleteSeat(seatId);
+  public ResponseEntity<String> deleteSeat(@RequestBody Seat seat, @PathVariable Long seatId) {
+    seatService.deleteSeat(seat);
     return ResponseEntity.ok("Seat deleted successfully");
   }
 

@@ -3,6 +3,7 @@ package com.ticket.reservation.domain.seat;
 import com.ticket.reservation.domain.room.Room;
 import com.ticket.reservation.domain.room.RoomRepository;
 import com.ticket.reservation.domain.seat.dto.SeatInput;
+import java.util.Optional;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,19 @@ public class SeatService {
 
   public boolean isExistsSeat(Seat seat) {
     return seatRepository.existsByRowAndNumber(seat.getRow(), seat.getNumber());
+  }
+
+  public void deleteSeat(Seat seat) {
+    Seat findSeat = seatRepository.findById(seat.getId())
+        .orElseThrow(() -> new NoResultException("존재하지 않는 좌석입니다."));
+    Room room = roomRepository.findById(findSeat.getRoomId())
+        .orElseThrow(() -> new NoResultException("존재하지 않는 상영관입니다."));
+    if (room != null) {
+      findSeat.removeSeat(room);
+      seatRepository.delete(findSeat);
+    } else {
+      throw new NoResultException("존재하지 않는 상영관입니다.");
+    }
   }
 
 }
