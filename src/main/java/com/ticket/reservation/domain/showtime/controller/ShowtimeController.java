@@ -19,8 +19,9 @@ public class ShowtimeController {
   private final ShowtimeService showtimeService;
 
   @PostMapping()
-  public ShowtimeDto addShowtime(@RequestBody ShowtimeInput showtimeInput) {
+  public ResponseEntity<ShowtimeDto> addShowtime(@RequestBody ShowtimeInput showtimeInput) {
     Showtime makeShowtime = showtimeService.addShowtime(showtimeInput);
-    return ShowtimeDto.fromEntity(makeShowtime);
+    ShowtimeDto showtimeDto = ShowtimeDto.fromEntity(makeShowtime);
+    return ResponseEntity.ok(showtimeDto);
   }
 }
