@@ -21,7 +21,7 @@ public class RoomEditInput {
 
     return Room.builder()
         .id(roomEditInput.getId())
-        .theater(theater)// 상영관 ID를 사용하여 Theater 엔티티를 생성
+        .theater(theater)
         .name(roomEditInput.getName())
         .build();
   }

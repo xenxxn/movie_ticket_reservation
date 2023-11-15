@@ -3,6 +3,7 @@ package com.ticket.reservation.domain.showtime.service;
 import com.ticket.reservation.domain.movie.entity.Movie;
 import com.ticket.reservation.domain.movie.repository.MovieRepository;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeDto;
+import com.ticket.reservation.domain.showtime.dto.ShowtimeEditInput;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeInput;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeOutput;
 import com.ticket.reservation.domain.showtime.entity.Showtime;
@@ -60,6 +61,15 @@ public class ShowtimeService {
     return ShowtimeOutput.toResponse(showtimeDto);
   }
 
+  @Transactional
+  public ShowtimeDto editShowtime(ShowtimeEditInput showtimeEditInput) {
+    Showtime showtime = ShowtimeEditInput.toEntity(showtimeEditInput);
+    validateMovie(showtime.getMovie().getId());
+    validateTheater(showtime.getTheater().getId());
+    showtimeRepository.save(showtime);
+    return ShowtimeDto.fromEntity(showtime);
+  }
+
 
   @Transactional
   public void deleteSpecificShowtime(Long movieId, Long theaterId, Long showtimeId) {
@@ -100,13 +110,11 @@ public class ShowtimeService {
   }
 
   public Movie validateMovie(Long movieId) {
-
     return movieRepository.findById(movieId)
         .orElseThrow(() -> new NoResultException("해당 영화는 존재하지 않습니다."));
   }
 
   public Theater validateTheater(Long theaterId) {
-
     return theaterRepository.findById(theaterId)
         .orElseThrow(() -> new NoResultException("해당 영화관은 존재하지 않습니다."));
   }
