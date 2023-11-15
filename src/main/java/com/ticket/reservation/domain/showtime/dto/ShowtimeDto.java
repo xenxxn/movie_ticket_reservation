@@ -2,6 +2,8 @@ package com.ticket.reservation.domain.showtime.dto;
 
 import com.ticket.reservation.domain.showtime.entity.Showtime;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,12 +18,6 @@ public class ShowtimeDto {
   private LocalDateTime startTime;
   private LocalDateTime endTime;
 
-  //TODO : movie, theater service 와 controller 완료 후에 사용할 메소드
-//  public void addShowtime(Movie movie, Theater theater) {
-//    this.movie = movie;
-//    this.theater = theater;
-//  }
-
   public static ShowtimeDto fromEntity(Showtime showtime){
     return ShowtimeDto.builder()
         .id(showtime.getId())
@@ -30,5 +26,11 @@ public class ShowtimeDto {
         .startTime(showtime.getStartTime())
         .endTime(showtime.getEndTime())
         .build();
+  }
+
+  public static List<ShowtimeDto> toResponseList(List<Showtime> showtimeList) {
+    return showtimeList.stream()
+        .map(ShowtimeDto::fromEntity)
+        .collect(Collectors.toList());
   }
 }

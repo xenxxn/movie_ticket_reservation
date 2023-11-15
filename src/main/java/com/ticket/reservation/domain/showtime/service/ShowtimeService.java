@@ -4,12 +4,12 @@ import com.ticket.reservation.domain.movie.entity.Movie;
 import com.ticket.reservation.domain.movie.repository.MovieRepository;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeDto;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeInput;
+import com.ticket.reservation.domain.showtime.dto.ShowtimeOutput;
 import com.ticket.reservation.domain.showtime.entity.Showtime;
 import com.ticket.reservation.domain.showtime.repository.ShowtimeRepository;
 import com.ticket.reservation.domain.theater.entity.Theater;
 import com.ticket.reservation.domain.theater.repository.TheaterRepository;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
@@ -27,24 +27,45 @@ public class ShowtimeService {
   public Showtime addShowtime(ShowtimeInput showtimeInput) {
     Showtime showtime = ShowtimeInput.toEntity(showtimeInput);
     validateShowtimeTimes(showtime);
-    boolean isExistsTheater = theaterRepository.existsById(showtime.getTheater().getId());
-    boolean isExistsMovie = movieRepository.existsById(showtime.getMovie().getId());
-
-    if (!isExistsTheater) {
-      throw new NoResultException("해당 영화관이 존재하지 않습니다.");
-    }
-    if (!isExistsMovie) {
-      throw new NoResultException("해당 영화가 존재하지 않습니다.");
-    }
+    validateMovie(showtime.getMovie().getId());
+    validateTheater(showtime.getTheater().getId());
     return showtimeRepository.save(showtime);
   }
+
+  public List<ShowtimeOutput> searchShowtimeListByMovie(Long movieId) {
+    validateMovie(movieId);
+    List<Showtime> showtimeList = showtimeRepository.findAllByMovieId(movieId);
+    List<ShowtimeDto> showtimeDtoList = ShowtimeDto.toResponseList(showtimeList);
+    return ShowtimeOutput.toResponseList(showtimeDtoList);
+  }
+
+  public List<ShowtimeOutput> searchShowtimeListByTheater(Long theaterId) {
+    validateTheater(theaterId);
+    List<Showtime> showtimeList = showtimeRepository.findAllByTheaterId(theaterId);
+    List<ShowtimeDto> showtimeDtoList = ShowtimeDto.toResponseList(showtimeList);
+    return ShowtimeOutput.toResponseList(showtimeDtoList);
+  }
+
+  public List<ShowtimeOutput> searchShowtimeByMovieAndTheater(Long movieId, Long theaterId) {
+    validateMovie(movieId);
+    validateTheater(theaterId);
+    List<Showtime> showtimeList = showtimeRepository.findAllByMovieIdAndTheaterId(movieId, theaterId);
+    List<ShowtimeDto> showtimeDtoList = ShowtimeDto.toResponseList(showtimeList);
+    return ShowtimeOutput.toResponseList(showtimeDtoList);
+  }
+
+  public ShowtimeOutput searchShowtimeDetail(Long showtimeId) {
+    Showtime showtime = validateShowtime(showtimeId);
+    ShowtimeDto showtimeDto = ShowtimeDto.fromEntity(showtime);
+    return ShowtimeOutput.toResponse(showtimeDto);
+  }
+
 
   @Transactional
   public void deleteSpecificShowtime(Long movieId, Long theaterId, Long showtimeId) {
     Movie movie = validateMovie(movieId);
     Theater theater = validateTheater(theaterId);
-    Showtime showtime = showtimeRepository.findById(showtimeId)
-        .orElseThrow(() -> new NoResultException("해당 상영회차는 존재하지 않습니다."));
+    Showtime showtime = validateShowtime(showtimeId);
 
     movie.getShowtimeList().remove(showtime);
     theater.getShowtimeList().remove(showtime);
@@ -79,20 +100,19 @@ public class ShowtimeService {
   }
 
   public Movie validateMovie(Long movieId) {
-    Movie movie = movieRepository.findById(movieId)
+
+    return movieRepository.findById(movieId)
         .orElseThrow(() -> new NoResultException("해당 영화는 존재하지 않습니다."));
-    if (movie.getShowtimeList().isEmpty()) {
-      throw new NoResultException("존재하지 않는 상영회차입니다.");
-    }
-    return movie;
   }
 
   public Theater validateTheater(Long theaterId) {
-    Theater theater = theaterRepository.findById(theaterId)
+
+    return theaterRepository.findById(theaterId)
         .orElseThrow(() -> new NoResultException("해당 영화관은 존재하지 않습니다."));
-    if (theater.getShowtimeList().isEmpty()) {
-      throw new NoResultException("존재하지 않는 상영회차입니다.");
-    }
-    return theater;
+  }
+
+  public Showtime validateShowtime(Long showtimeId) {
+    return showtimeRepository.findById(showtimeId)
+        .orElseThrow(() -> new NoResultException("해당 상영회차는 존재하지 않습니다."));
   }
 }
