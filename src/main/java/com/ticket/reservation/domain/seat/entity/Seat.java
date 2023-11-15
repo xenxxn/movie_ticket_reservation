@@ -32,7 +32,7 @@ public class Seat {
     @Column(name = "SEAT_ID")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ROOM_ID")
     private Room room;
 
@@ -46,14 +46,7 @@ public class Seat {
     @Enumerated(EnumType.STRING)
     private SeatStatus status; //RESERVED, UNRESERVED
 
-    public Long getRoomId(){
-        if (room == null) {
-            throw new NoResultException("상영관이 존재하지 않습니다.");
-        }
-        return room.getId();
-    }
-
-    public void removeSeat(Room room) {
+    public void setSeat(Room room) {
         this.room = room;
     }
 

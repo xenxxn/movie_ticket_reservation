@@ -26,7 +26,7 @@ public class SeatService {
     if (isExistsSeat(seat)) {
       throw new RuntimeException("이미 존재하는 좌석입니다.");
     }
-    boolean isExistsRoom = roomRepository.existsById(seat.getRoomId());
+    boolean isExistsRoom = roomRepository.existsById(seat.getRoom().getId());
     if (!isExistsRoom) {
       throw new NoResultException("존재하지 않는 상영관입니다.");
     }
@@ -39,20 +39,31 @@ public class SeatService {
   }
 
   @Transactional
-  public void deleteSeat(Seat seat) {
-    Seat findSeat = seatRepository.findById(seat.getId())
+  public void deleteSpecificSeat(Long roomId, Long seatId) {
+    Room room = validateRoom(roomId);
+    Seat seat = seatRepository.findById(seatId)
         .orElseThrow(() -> new NoResultException("존재하지 않는 좌석입니다."));
-    Room room = roomRepository.findById(findSeat.getRoomId())
-        .orElseThrow(() -> new NoResultException("존재하지 않는 상영관입니다."));
-    if (room != null) {
-      findSeat.removeSeat(room);
-      seatRepository.delete(findSeat);
+
+    room.getSeats().remove(seat);
+    roomRepository.save(room);
+  }
+
+  @Transactional
+  public void deleteAllSeats(Long roomId) {
+    Room room = validateRoom(roomId);
+    List<Seat> seats = seatRepository.findAllByRoomId(roomId);
+
+    for (Seat seat : seats) {
+      seat.setSeat(null);
+      seatRepository.save(seat);
     }
+
+    room.getSeats().clear();
+    roomRepository.save(room);
   }
 
   public List<SeatOutput> searchSeatList(Long roomId) {
-    Room room = roomRepository.findById(roomId)
-        .orElseThrow(() -> new NoResultException("존재하지 않는 상영관입니다."));
+    Room room = validateRoom(roomId);
     List<Seat> seats = seatRepository.findSeatByRoomOrderByRow(room);
     List<SeatDto> seatDtos = SeatDto.toResponseList(seats);
     return SeatOutput.toResponseList(seatDtos);
@@ -61,9 +72,18 @@ public class SeatService {
   @Transactional
   public SeatDto editSeat(Long seatId, SeatEditInput seatEditInput) {
     Seat seat = seatRepository.findById(seatId)
-        .orElseThrow(() -> new NoResultException("해당 좌석을 찾을 수 없습니다."));
+        .orElseThrow(() -> new NoResultException("존재하지 않는 좌석입니다."));
     seat.updateSeat(seatEditInput);
     seatRepository.save(seat);
     return SeatDto.fromEntity(seat);
+  }
+
+  public Room validateRoom(Long roomId) {
+    Room room = roomRepository.findById(roomId)
+        .orElseThrow(() -> new NoResultException("해당 상영관을 찾을 수 없습니다."));
+    if (room.getSeats().isEmpty()) {
+      throw new NoResultException("존재하지 않는 좌석입니다.");
+    }
+    return room;
   }
 }

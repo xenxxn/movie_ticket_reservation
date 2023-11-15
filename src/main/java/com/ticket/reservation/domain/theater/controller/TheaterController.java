@@ -9,6 +9,7 @@ import com.ticket.reservation.domain.theater.dto.TheaterOutput;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,23 +26,32 @@ public class TheaterController {
 
   @GetMapping("/list/{searchWord}")
   public ResponseEntity<List<TheaterOutput>> searchTheaterList(@PathVariable String searchWord) {
-    List<TheaterOutput> theaterOutputList = theaterService.searchTheaterByName(searchWord);
+    List<TheaterOutput> theaterOutputList = theaterService.searchTheatersByName(searchWord);
     return ResponseEntity.ok(theaterOutputList);
   }
 
   @PostMapping
-  public TheaterDto addTheater(@RequestBody TheaterInput theaterInput) {
+  public ResponseEntity<TheaterDto> addTheater(@RequestBody TheaterInput theaterInput) {
     Theater theater = theaterService.addTheater(theaterInput);
-    return TheaterDto.fromEntity(theater);
+    TheaterDto theaterDto = TheaterDto.fromEntity(theater);
+    return ResponseEntity.ok(theaterDto);
   }
 
   @PutMapping("/modification")
-  public TheaterDto editTheater(@RequestBody TheaterEditInput theaterEditInput) {
-    return theaterService.editTheater(theaterEditInput);
+  public ResponseEntity<TheaterDto> editTheater(@RequestBody TheaterEditInput theaterEditInput) {
+    TheaterDto theaterDto = theaterService.editTheater(theaterEditInput);
+    return ResponseEntity.ok(theaterDto);
   }
 
   @GetMapping("/{searchWord}")
-  public TheaterOutput searchTheater(@PathVariable String searchWord) {
-    return theaterService.searchTheater(searchWord);
+  public ResponseEntity<TheaterOutput> searchTheater(@PathVariable String searchWord) {
+    TheaterOutput theaterOutput = theaterService.searchSpecificTheaterByName(searchWord);
+    return ResponseEntity.ok(theaterOutput);
+  }
+
+  @DeleteMapping("/{theaterId}")
+  public ResponseEntity<String> deleteTheater(@PathVariable Long theaterId) {
+    theaterService.deleteTheater(theaterId);
+    return ResponseEntity.ok("영화관이 삭제되었습니다.");
   }
 }

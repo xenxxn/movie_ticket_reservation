@@ -25,15 +25,22 @@ public class SeatController {
   private final SeatService seatService;
 
   @PostMapping("/{seatId}")
-  public SeatDto createSeat(@RequestBody SeatInput seatInput, @PathVariable Long seatId) {
+  public ResponseEntity<SeatDto> createSeat(@RequestBody SeatInput seatInput, @PathVariable Long seatId) {
     Seat makeSeat = seatService.createSeat(seatInput);
-    return SeatDto.fromEntity(makeSeat);
+    SeatDto seatDto = SeatDto.fromEntity(makeSeat);
+    return ResponseEntity.ok(seatDto);
   }
 
-  @DeleteMapping("/{seatId}")
-  public ResponseEntity<String> deleteSeat(@RequestBody Seat seat, @PathVariable Long seatId) {
-    seatService.deleteSeat(seat);
-    return ResponseEntity.ok("Seat deleted successfully");
+  @DeleteMapping("/{roomId}/{seatId}")
+  public ResponseEntity<String> deleteSpecificSeat(@PathVariable Long roomId, @PathVariable Long seatId) {
+    seatService.deleteSpecificSeat(roomId, seatId);
+    return ResponseEntity.ok("해당 좌석이 삭제되었습니다.");
+  }
+
+  @DeleteMapping("/{roomId}")
+  public ResponseEntity<String> deleteAllSeats(@PathVariable Long roomId) {
+    seatService.deleteAllSeats(roomId);
+    return ResponseEntity.ok("모든 좌석이 삭제되었습니다.");
   }
 
   @GetMapping("/list/{roomId}")

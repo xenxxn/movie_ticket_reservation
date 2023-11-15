@@ -21,7 +21,7 @@ public class SeatDto {
   public static SeatDto fromEntity(Seat seat) {
     return SeatDto.builder()
         .id(seat.getId())
-        .roomId(seat.getRoomId())
+        .roomId(seat.getRoom().getId())
         .row(seat.getRow())
         .number(seat.getNumber())
         .build();

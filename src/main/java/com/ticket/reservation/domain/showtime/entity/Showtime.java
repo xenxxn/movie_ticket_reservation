@@ -33,6 +33,7 @@ public class Showtime {
     @ManyToOne
     @JoinColumn(name = "MOVIE_ID")
     private Movie movie;
+
     @ManyToOne
     @JoinColumn(name = "THEATER_ID")
     private Theater theater;
