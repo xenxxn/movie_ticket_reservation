@@ -37,9 +37,9 @@ public class MovieController {
     return movieService.searchMovieList(title);
   }
   @PostMapping
-  public MovieDto addMovie(@RequestBody MovieInput movieInput) {
+  public ResponseEntity<MovieDto> addMovie(@RequestBody MovieInput movieInput) {
     Movie movie = movieService.addMovie(movieInput);
-    return MovieDto.fromEntity(movie);
+    return ResponseEntity.ok(MovieDto.fromEntity(movie));
   }
 
   @PutMapping("/modification/{id}")

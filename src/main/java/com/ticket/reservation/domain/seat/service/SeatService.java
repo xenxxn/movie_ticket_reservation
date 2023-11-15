@@ -47,8 +47,6 @@ public class SeatService {
     if (room != null) {
       findSeat.removeSeat(room);
       seatRepository.delete(findSeat);
-    } else {
-      throw new NoResultException("존재하지 않는 상영관입니다.");
     }
   }
 
