@@ -24,8 +24,8 @@ public class RoomService {
   @Transactional
   public Room createRoom(RoomInput roomInput) {
     Room room = RoomInput.toEntity(roomInput);
-    boolean isExistsTheater = theaterRepository.existsById(room.getTheaterId());
-    if (!isExistsTheater) {
+    Theater theater = validateTheater(room.getTheater().getId());
+    if (theater == null) {
       throw new NoResultException("해당 영화관은 존재하지 않습니다.");
     }
       return roomRepository.save(room);
@@ -58,8 +58,8 @@ public class RoomService {
   @Transactional
   public RoomDto editRoom(RoomEditInput roomEditInput) {
     Room room = RoomEditInput.toEntity(roomEditInput);
-    boolean isExistsTheater = theaterRepository.existsById(room.getTheaterId());
-    if (!isExistsTheater) {
+    Theater theater = validateTheater(room.getTheater().getId());
+    if (theater == null) {
       throw new NoResultException("해당 영화관은 존재하지 않습니다.");
     }
     roomRepository.save(room);

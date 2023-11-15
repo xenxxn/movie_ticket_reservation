@@ -20,7 +20,7 @@ public class RoomDto {
   public static RoomDto fromEntity(Room room) {
     return RoomDto.builder()
         .id(room.getId())
-        .theaterId(room.getTheaterId())
+        .theaterId(room.getTheater().getId())
         .name(room.getName())
         .build();
   }

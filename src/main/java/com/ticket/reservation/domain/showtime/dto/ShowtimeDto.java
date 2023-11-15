@@ -25,8 +25,8 @@ public class ShowtimeDto {
   public static ShowtimeDto fromEntity(Showtime showtime){
     return ShowtimeDto.builder()
         .id(showtime.getId())
-        .movieId(showtime.getMovieId())
-        .theaterId(showtime.getTheaterId())
+        .movieId(showtime.getMovie().getId())
+        .theaterId(showtime.getTheater().getId())
         .startTime(showtime.getStartTime())
         .endTime(showtime.getEndTime())
         .build();

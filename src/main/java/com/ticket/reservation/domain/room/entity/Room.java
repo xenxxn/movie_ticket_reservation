@@ -43,13 +43,6 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seat> seats = new ArrayList<>();
 
-    public Long getTheaterId() {
-        if (theater == null) {
-            throw new NoResultException("영화관이 존재하지 않습니다.");
-        }
-        return theater.getId();
-    }
-
 
     public void setRoom(Theater theater) {
         this.theater = theater;
