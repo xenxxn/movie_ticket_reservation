@@ -27,10 +27,12 @@ public class ShowtimeService {
     boolean isExistsTheater = theaterRepository.existsById(showtime.getTheater().getId());
     boolean isExistsMovie = movieRepository.existsById(showtime.getMovie().getId());
 
-    if (!isExistsTheater || !isExistsMovie) {
-      throw new NoResultException("상영회차를 추가할 수 없습니다.");
+    if (!isExistsTheater) {
+      throw new NoResultException("해당 영화관이 존재하지 않습니다.");
     }
-
+    if (!isExistsMovie) {
+      throw new NoResultException("해당 영화가 존재하지 않습니다.");
+    }
     return showtimeRepository.save(showtime);
   }
 
