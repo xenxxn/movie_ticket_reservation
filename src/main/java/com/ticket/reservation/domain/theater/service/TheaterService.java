@@ -23,7 +23,7 @@ public class TheaterService {
     return theaterRepository.save(theater);
   }
 
-  public List<TheaterOutput> searchTheaterByName(String name) {
+  public List<TheaterOutput> searchTheatersByName(String name) {
     List<TheaterDto> theaterDtos = theaterRepository.findByNameContaining(name);
     if (theaterDtos.isEmpty()) {
       throw new NoResultException("찾으시는 영화관이 없습니다.");
@@ -31,7 +31,7 @@ public class TheaterService {
     return TheaterOutput.toResponse(theaterDtos);
   }
 
-  public TheaterOutput searchTheater(String name) {
+  public TheaterOutput searchSpecificTheaterByName(String name) {
     Theater theater = theaterRepository.findByName(name);
     if (theater == null) {
       throw new NoResultException("찾으시는 영화관이 없습니다.");
@@ -43,8 +43,7 @@ public class TheaterService {
 
   @Transactional
   public TheaterDto editTheater(TheaterEditInput theaterEditInput) {
-    Theater theater = theaterRepository.findById(theaterEditInput.getId())
-        .orElseThrow(() -> new NoResultException("해당 영화관은 존재하지 않습니다."));
+    Theater theater = validateTheater(theaterEditInput.getId());
 
     Theater editTheater = Theater.builder()
         .id(theater.getId())
@@ -56,5 +55,16 @@ public class TheaterService {
 
     Theater saved = theaterRepository.save(editTheater);
     return TheaterDto.fromEntity(saved);
+  }
+
+  @Transactional
+  public void deleteTheater(Long theaterId) {
+    Theater theater = validateTheater(theaterId);
+    theaterRepository.delete(theater);
+  }
+
+  public Theater validateTheater(Long theaterId) {
+    return theaterRepository.findById(theaterId)
+        .orElseThrow(() -> new NoResultException("해당 영화관은 존재하지 않습니다."));
   }
 }

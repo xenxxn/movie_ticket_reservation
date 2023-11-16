@@ -25,15 +25,22 @@ public class RoomController {
   private final RoomService roomService;
 
   @PostMapping("/{roomId}")
-  public RoomDto createRoom(@RequestBody RoomInput roomInput, @PathVariable Long roomId) {
+  public ResponseEntity<RoomDto> createRoom(@RequestBody RoomInput roomInput, @PathVariable Long roomId) {
     Room makeRoom = roomService.createRoom(roomInput);
-    return RoomDto.fromEntity(makeRoom);
+    RoomDto roomDto = RoomDto.fromEntity(makeRoom);
+    return ResponseEntity.ok(roomDto);
   }
 
-  @DeleteMapping("/{roomId}")
-  public ResponseEntity<String> deleteRoom(@RequestBody Room room, @PathVariable Long roomId) {
-    roomService.deleteRoom(room);
-    return ResponseEntity.ok("Room deleted successfully");
+  @DeleteMapping("/{theaterId}/{roomId}")
+  public ResponseEntity<String> deleteSpecificRoom(@PathVariable Long theaterId, @PathVariable Long roomId) {
+    roomService.deleteSpecificRoom(theaterId, roomId);
+    return ResponseEntity.ok("해당 상영관이 삭제되었습니다.");
+  }
+
+  @DeleteMapping("/{theaterId}")
+  public ResponseEntity<String> deleteAllRooms(@PathVariable Long theaterId) {
+    roomService.deleteAllRooms(theaterId);
+    return ResponseEntity.ok("모든 상영관이 삭제되었습니다.");
   }
 
   @PutMapping("/modification/{roomId}")

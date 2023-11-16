@@ -47,10 +47,20 @@ public class MovieService {
 
     @Transactional
     public MovieDto editMovie(Long movieId, MovieEditInput movieEditInput) {
-        Movie movie = movieRepository.findById(movieId)
-            .orElseThrow(() -> new NoResultException("해당 영화를 찾을 수 없습니다."));
+        Movie movie = validateMovie(movieId);
         movie.updateMovie(movieEditInput);
         movieRepository.save(movie);
         return MovieDto.fromEntity(movie);
+    }
+
+    @Transactional
+    public void deleteMovie(Long movieId) {
+        Movie movie = validateMovie(movieId);
+        movieRepository.delete(movie);
+    }
+
+    public Movie validateMovie(Long movieId) {
+        return movieRepository.findById(movieId)
+            .orElseThrow(() -> new NoResultException("해당 영화를 찾을 수 없습니다."));
     }
 }

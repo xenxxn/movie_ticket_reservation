@@ -24,40 +24,61 @@ public class RoomService {
   @Transactional
   public Room createRoom(RoomInput roomInput) {
     Room room = RoomInput.toEntity(roomInput);
-    boolean isExistsTheater = theaterRepository.existsById(room.getTheaterId());
-    if (!isExistsTheater) {
-      throw new NoResultException("존재하지 않는 영화관입니다.");
+    Theater theater = validateTheater(room.getTheater().getId());
+    if (theater == null) {
+      throw new NoResultException("해당 영화관은 존재하지 않습니다.");
     }
       return roomRepository.save(room);
   }
 
-  public void deleteRoom(Room room) {
-    Optional<Theater> theater = theaterRepository.findById(room.getTheater().getId());
-    if (theater.isPresent()) {
-      Theater theaterResult = theater.get();
-      room.removeRoom(theaterResult);
-      roomRepository.delete(room);
-    } else {
-      throw new NoResultException("존재하지 않는 영화관입니다.");
-    }
+  @Transactional
+  public void deleteSpecificRoom(Long theaterId, Long roomId) {
+    Theater theater = validateTheater(theaterId);
+    Room room = roomRepository.findById(roomId)
+        .orElseThrow(() -> new NoResultException("해당 상영관은 존재하지 않습니다."));
+    theater.getRooms().remove(room);
+    theaterRepository.save(theater);
   }
+
+  @Transactional
+  public void deleteAllRooms(Long theaterId) {
+    Theater theater = validateTheater(theaterId);
+    List<Room> rooms = roomRepository.findRoomByTheaterId(theaterId);
+
+    for (Room room : rooms) {
+      room.setRoom(null);
+      roomRepository.save(room);
+    }
+
+    theater.getRooms().clear();
+    theaterRepository.save(theater);
+  }
+
 
   @Transactional
   public RoomDto editRoom(RoomEditInput roomEditInput) {
     Room room = RoomEditInput.toEntity(roomEditInput);
-    boolean isExistsTheater = theaterRepository.existsById(room.getTheaterId());
-    if (!isExistsTheater) {
-      throw new NoResultException("존재하지 않는 영화관입니다.");
+    Theater theater = validateTheater(room.getTheater().getId());
+    if (theater == null) {
+      throw new NoResultException("해당 영화관은 존재하지 않습니다.");
     }
     roomRepository.save(room);
     return RoomDto.fromEntity(room);
   }
 
   public List<RoomOutput> searchRoomList(Long theaterId){
-    Theater theater = theaterRepository.findById(theaterId)
-        .orElseThrow(() -> new NoResultException("존재하지 않는 영화관입니다."));
-    List<Room> rooms = roomRepository.findRoomByTheater(theater);
+    validateTheater(theaterId);
+    List<Room> rooms = roomRepository.findRoomByTheaterId(theaterId);
     List<RoomDto> roomDtos = RoomDto.toResponseList(rooms);
     return RoomOutput.toResponseList(roomDtos);
+  }
+
+  public Theater validateTheater(Long theaterId) {
+    Theater theater = theaterRepository.findById(theaterId)
+        .orElseThrow(() -> new NoResultException("해당 영화관은 존재하지 않습니다."));
+    if (theater.getRooms().isEmpty()) {
+      throw new NoResultException("해당 상영관은 존재하지 않습니다.");
+    }
+    return theater;
   }
 }

@@ -33,6 +33,7 @@ public class Showtime {
     @ManyToOne
     @JoinColumn(name = "MOVIE_ID")
     private Movie movie;
+
     @ManyToOne
     @JoinColumn(name = "THEATER_ID")
     private Theater theater;
@@ -53,17 +54,9 @@ public class Showtime {
         }
     }
 
-    public Long getMovieId() {
-        if (movie == null){
-            throw new NoResultException("해당 영화가 존재하지 않습니다.");
-        }
-        return movie.getId();
+    public void setShowtime(Movie movie, Theater theater) {
+        this.movie = movie;
+        this.theater = theater;
     }
 
-    public Long getTheaterId() {
-        if (theater == null) {
-            throw new NoResultException("해당 영화관이 존재하지 않습니다.");
-        }
-        return theater.getId();
-    }
 }
