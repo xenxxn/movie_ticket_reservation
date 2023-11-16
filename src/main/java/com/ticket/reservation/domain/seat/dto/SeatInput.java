@@ -26,7 +26,7 @@ public class SeatInput {
             .build())
         .row(seatInput.getRow())
         .number(seatInput.getNumber())
-        .status(seatInput.getStatus())
+        .status(SeatStatus.UNRESERVED)
         .build();
   }
 }
