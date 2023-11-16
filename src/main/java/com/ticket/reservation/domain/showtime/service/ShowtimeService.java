@@ -10,8 +10,6 @@ import com.ticket.reservation.domain.showtime.dto.ShowtimeInput;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeOutput;
 import com.ticket.reservation.domain.showtime.entity.Showtime;
 import com.ticket.reservation.domain.showtime.repository.ShowtimeRepository;
-import com.ticket.reservation.domain.theater.entity.Theater;
-import com.ticket.reservation.domain.theater.repository.TheaterRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.NoResultException;

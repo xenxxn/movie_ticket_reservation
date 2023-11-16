@@ -25,8 +25,8 @@ public class RoomController {
   private final RoomService roomService;
 
   @PostMapping("/{roomId}")
-  public ResponseEntity<RoomDto> createRoom(@RequestBody RoomInput roomInput, @PathVariable Long roomId) {
-    Room makeRoom = roomService.createRoom(roomInput);
+  public ResponseEntity<RoomDto> addRoom(@RequestBody RoomInput roomInput, @PathVariable Long roomId) {
+    Room makeRoom = roomService.addRoom(roomInput);
     RoomDto roomDto = RoomDto.fromEntity(makeRoom);
     return ResponseEntity.ok(roomDto);
   }

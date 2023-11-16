@@ -1,6 +1,5 @@
 package com.ticket.reservation.domain.movie.dto;
 
-import com.ticket.reservation.domain.movie.entity.Movie;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

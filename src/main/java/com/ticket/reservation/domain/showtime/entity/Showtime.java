@@ -3,8 +3,6 @@ package com.ticket.reservation.domain.showtime.entity;
 import com.ticket.reservation.domain.movie.entity.Movie;
 import com.ticket.reservation.domain.reservation.Reservation;
 import com.ticket.reservation.domain.room.entity.Room;
-import com.ticket.reservation.domain.showtime.dto.ShowtimeEditInput;
-import com.ticket.reservation.domain.theater.entity.Theater;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NoResultException;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -49,19 +46,6 @@ public class Showtime {
 
     @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Reservation> reservations = new ArrayList<>();
-
-    public void addShowtime(Movie movie, Room room) {
-        this.movie = movie;
-        this.room = room;
-    }
-    public void updateShowtime(ShowtimeEditInput showtimeEditInput) {
-        if (showtimeEditInput.getStartTime() != null) {
-            this.startTime = showtimeEditInput.getStartTime();
-        }
-        if (showtimeEditInput.getEndTime() != null) {
-            this.endTime = showtimeEditInput.getEndTime();
-        }
-    }
 
     public void setShowtime(Movie movie, Room room) {
         this.movie = movie;

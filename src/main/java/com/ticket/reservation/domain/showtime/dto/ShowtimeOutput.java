@@ -1,11 +1,8 @@
 package com.ticket.reservation.domain.showtime.dto;
 
-import com.ticket.reservation.domain.movie.dto.MovieOutput;
 import com.ticket.reservation.domain.movie.entity.Movie;
 import com.ticket.reservation.domain.room.entity.Room;
 import com.ticket.reservation.domain.showtime.entity.Showtime;
-import com.ticket.reservation.domain.theater.dto.TheaterOutput;
-import com.ticket.reservation.domain.theater.entity.Theater;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
