@@ -27,7 +27,7 @@ public class ReservationInput {
         .id(reservationInput.getReservationId())
         .showtime(showtime)
         .seat(seat)
-        .reservationStatus(reservationInput.getReservationStatus())
+        .reservationStatus(ReservationStatus.UNUSED)
         .build();
   }
 }

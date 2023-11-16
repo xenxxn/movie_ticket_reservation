@@ -34,5 +34,11 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
 
+    public void setShowtime(Showtime showtime) {
+        this.showtime = showtime;
+    }
 
+    public void setSeat(Seat seat) {
+        this.seat = seat;
+    }
 }

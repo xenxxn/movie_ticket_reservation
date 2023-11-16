@@ -72,4 +72,7 @@ public class Seat {
         }
     }
 
+    public void setStatus(SeatStatus seatStatus) {
+        this.status = seatStatus;
+    }
 }
