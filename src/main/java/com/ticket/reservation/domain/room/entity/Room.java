@@ -1,6 +1,7 @@
 package com.ticket.reservation.domain.room.entity;
 
 import com.ticket.reservation.domain.seat.entity.Seat;
+import com.ticket.reservation.domain.showtime.entity.Showtime;
 import com.ticket.reservation.domain.theater.entity.Theater;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,8 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seat> seats = new ArrayList<>();
 
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Showtime> showtimeList = new ArrayList<>();
 
     public void setRoom(Theater theater) {
         this.theater = theater;

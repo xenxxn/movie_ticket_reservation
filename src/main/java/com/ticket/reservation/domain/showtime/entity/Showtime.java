@@ -1,6 +1,7 @@
 package com.ticket.reservation.domain.showtime.entity;
 
 import com.ticket.reservation.domain.movie.entity.Movie;
+import com.ticket.reservation.domain.room.entity.Room;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeEditInput;
 import com.ticket.reservation.domain.theater.entity.Theater;
 import java.time.LocalDateTime;
@@ -35,15 +36,15 @@ public class Showtime {
     private Movie movie;
 
     @ManyToOne
-    @JoinColumn(name = "THEATER_ID")
-    private Theater theater;
+    @JoinColumn(name = "ROOM_ID")
+    private Room room;
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    public void addShowtime(Movie movie, Theater theater) {
+    public void addShowtime(Movie movie, Room room) {
         this.movie = movie;
-        this.theater = theater;
+        this.room = room;
     }
     public void updateShowtime(ShowtimeEditInput showtimeEditInput) {
         if (showtimeEditInput.getStartTime() != null) {
@@ -54,9 +55,9 @@ public class Showtime {
         }
     }
 
-    public void setShowtime(Movie movie, Theater theater) {
+    public void setShowtime(Movie movie, Room room) {
         this.movie = movie;
-        this.theater = theater;
+        this.room = room;
     }
 
 }

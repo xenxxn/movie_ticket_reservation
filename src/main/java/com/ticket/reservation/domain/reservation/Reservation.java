@@ -12,12 +12,8 @@
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    private Long id;
 //
-//    @ManyToOne
-//    private Member member;
 //
 //    @ManyToOne
 //    private Showtime showtime;
 //
-//    @ManyToOne
-//    private Movie movie;
 //}

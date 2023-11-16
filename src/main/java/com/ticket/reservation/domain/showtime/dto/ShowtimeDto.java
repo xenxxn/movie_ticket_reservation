@@ -14,7 +14,7 @@ import lombok.Getter;
 public class ShowtimeDto {
   private Long id;
   private Long movieId;
-  private Long theaterId;
+  private Long roomId;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
 
@@ -22,7 +22,7 @@ public class ShowtimeDto {
     return ShowtimeDto.builder()
         .id(showtime.getId())
         .movieId(showtime.getMovie().getId())
-        .theaterId(showtime.getTheater().getId())
+        .roomId(showtime.getRoom().getId())
         .startTime(showtime.getStartTime())
         .endTime(showtime.getEndTime())
         .build();

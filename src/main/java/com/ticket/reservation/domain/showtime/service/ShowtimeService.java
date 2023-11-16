@@ -2,6 +2,8 @@ package com.ticket.reservation.domain.showtime.service;
 
 import com.ticket.reservation.domain.movie.entity.Movie;
 import com.ticket.reservation.domain.movie.repository.MovieRepository;
+import com.ticket.reservation.domain.room.entity.Room;
+import com.ticket.reservation.domain.room.repository.RoomRepository;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeDto;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeEditInput;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeInput;
@@ -22,14 +24,14 @@ import org.springframework.stereotype.Service;
 public class ShowtimeService {
   private final ShowtimeRepository showtimeRepository;
   private final MovieRepository movieRepository;
-  private final TheaterRepository theaterRepository;
+  private final RoomRepository roomRepository;
 
   @Transactional
   public Showtime addShowtime(ShowtimeInput showtimeInput) {
     Showtime showtime = ShowtimeInput.toEntity(showtimeInput);
     validateShowtimeTimes(showtime);
     validateMovie(showtime.getMovie().getId());
-    validateTheater(showtime.getTheater().getId());
+    validateRoom(showtime.getRoom().getId());
     return showtimeRepository.save(showtime);
   }
 
@@ -40,17 +42,17 @@ public class ShowtimeService {
     return ShowtimeOutput.toResponseList(showtimeDtoList);
   }
 
-  public List<ShowtimeOutput> searchShowtimeListByTheater(Long theaterId) {
-    validateTheater(theaterId);
-    List<Showtime> showtimeList = showtimeRepository.findAllByTheaterId(theaterId);
+  public List<ShowtimeOutput> searchShowtimeListByRoom(Long roomId) {
+    validateRoom(roomId);
+    List<Showtime> showtimeList = showtimeRepository.findAllByRoomId(roomId);
     List<ShowtimeDto> showtimeDtoList = ShowtimeDto.toResponseList(showtimeList);
     return ShowtimeOutput.toResponseList(showtimeDtoList);
   }
 
-  public List<ShowtimeOutput> searchShowtimeByMovieAndTheater(Long movieId, Long theaterId) {
+  public List<ShowtimeOutput> searchShowtimeByMovieAndRoom(Long movieId, Long roomId) {
     validateMovie(movieId);
-    validateTheater(theaterId);
-    List<Showtime> showtimeList = showtimeRepository.findAllByMovieIdAndTheaterId(movieId, theaterId);
+    validateRoom(roomId);
+    List<Showtime> showtimeList = showtimeRepository.findAllByMovieIdAndRoomId(movieId, roomId);
     List<ShowtimeDto> showtimeDtoList = ShowtimeDto.toResponseList(showtimeList);
     return ShowtimeOutput.toResponseList(showtimeDtoList);
   }
@@ -65,30 +67,30 @@ public class ShowtimeService {
   public ShowtimeDto editShowtime(ShowtimeEditInput showtimeEditInput) {
     Showtime showtime = ShowtimeEditInput.toEntity(showtimeEditInput);
     validateMovie(showtime.getMovie().getId());
-    validateTheater(showtime.getTheater().getId());
+    validateRoom(showtime.getRoom().getId());
     showtimeRepository.save(showtime);
     return ShowtimeDto.fromEntity(showtime);
   }
 
 
   @Transactional
-  public void deleteSpecificShowtime(Long movieId, Long theaterId, Long showtimeId) {
+  public void deleteSpecificShowtime(Long movieId, Long roomId, Long showtimeId) {
     Movie movie = validateMovie(movieId);
-    Theater theater = validateTheater(theaterId);
+    Room room = validateRoom(roomId);
     Showtime showtime = validateShowtime(showtimeId);
 
     movie.getShowtimeList().remove(showtime);
-    theater.getShowtimeList().remove(showtime);
+    room.getShowtimeList().remove(showtime);
     movieRepository.save(movie);
-    theaterRepository.save(theater);
+    roomRepository.save(room);
   }
 
   @Transactional
-  public void deleteAllShowtime(Long movieId, Long theaterId) {
+  public void deleteAllShowtime(Long movieId, Long roomId) {
     Movie movie = validateMovie(movieId);
-    Theater theater = validateTheater(theaterId);
+    Room room = validateRoom(roomId);
 
-    List<Showtime> showtimeList = showtimeRepository.findAllByMovieIdAndTheaterId(movieId, theaterId);
+    List<Showtime> showtimeList = showtimeRepository.findAllByMovieIdAndRoomId(movieId, roomId);
 
     for (Showtime showtime : showtimeList) {
       showtime.setShowtime(null, null);
@@ -96,9 +98,9 @@ public class ShowtimeService {
     }
 
     movie.getShowtimeList().clear();
-    theater.getShowtimeList().clear();
+    room.getShowtimeList().clear();
     movieRepository.save(movie);
-    theaterRepository.save(theater);
+    roomRepository.save(room);
   }
 
   private void validateShowtimeTimes(Showtime showtime) {
@@ -114,9 +116,9 @@ public class ShowtimeService {
         .orElseThrow(() -> new NoResultException("해당 영화는 존재하지 않습니다."));
   }
 
-  public Theater validateTheater(Long theaterId) {
-    return theaterRepository.findById(theaterId)
-        .orElseThrow(() -> new NoResultException("해당 영화관은 존재하지 않습니다."));
+  public Room validateRoom(Long roomId) {
+    return roomRepository.findById(roomId)
+        .orElseThrow(() -> new NoResultException("해당 상영관은 존재하지 않습니다."));
   }
 
   public Showtime validateShowtime(Long showtimeId) {
