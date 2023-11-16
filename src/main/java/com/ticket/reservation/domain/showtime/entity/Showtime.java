@@ -1,7 +1,7 @@
 package com.ticket.reservation.domain.showtime.entity;
 
 import com.ticket.reservation.domain.movie.entity.Movie;
-import com.ticket.reservation.domain.reservation.Reservation;
+import com.ticket.reservation.domain.reservation.entity.Reservation;
 import com.ticket.reservation.domain.room.entity.Room;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

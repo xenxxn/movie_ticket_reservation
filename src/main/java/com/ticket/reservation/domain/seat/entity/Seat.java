@@ -1,6 +1,6 @@
 package com.ticket.reservation.domain.seat.entity;
 
-import com.ticket.reservation.domain.reservation.Reservation;
+import com.ticket.reservation.domain.reservation.entity.Reservation;
 import com.ticket.reservation.domain.room.entity.Room;
 import com.ticket.reservation.domain.seat.SeatStatus;
 import com.ticket.reservation.domain.seat.dto.SeatEditInput;

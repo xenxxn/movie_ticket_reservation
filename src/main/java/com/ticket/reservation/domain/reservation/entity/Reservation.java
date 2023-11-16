@@ -1,5 +1,6 @@
-package com.ticket.reservation.domain.reservation;
+package com.ticket.reservation.domain.reservation.entity;
 
+import com.ticket.reservation.domain.reservation.ReservationStatus;
 import com.ticket.reservation.domain.seat.entity.Seat;
 import com.ticket.reservation.domain.showtime.entity.Showtime;
 
@@ -30,7 +31,8 @@ public class Reservation {
     private Seat seat;
 
     @Column(name = "STATUS")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus reservationStatus;
 
 
 }
