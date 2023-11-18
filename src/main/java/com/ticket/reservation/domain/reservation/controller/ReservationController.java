@@ -6,6 +6,7 @@ import com.ticket.reservation.domain.reservation.entity.Reservation;
 import com.ticket.reservation.domain.reservation.service.ReservationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,4 +25,11 @@ public class ReservationController {
     ReservationDto reservationDto = ReservationDto.fromEntity(reservation);
     return ResponseEntity.ok(reservationDto);
   }
+
+  @DeleteMapping("/{seatId}/{showtimeId}/{reservationId}")
+  public ResponseEntity<String> deleteReservation(@PathVariable Long seatId, @PathVariable Long showtimeId, @PathVariable Long reservationId) {
+    reservationService.deleteReservation(seatId, showtimeId, reservationId);
+    return ResponseEntity.ok("해당 예약이 삭제되었습니다.");
+  }
+
 }

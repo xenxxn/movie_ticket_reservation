@@ -32,18 +32,29 @@ public class ReservationService {
     return reservationRepository.save(reservation);
   }
 
+  @Transactional
+  public void deleteReservation(Long seatId, Long showtimeId, Long reservationId) {
+    Seat seat = validateSeat(seatId);
+    validateShowtime(showtimeId);
+    Reservation reservation = validateReservation(reservationId);
+    seat.getReservations().remove(reservation);
+    seat.setStatus(SeatStatus.UNRESERVED);
+    seatRepository.save(seat);
+    reservationRepository.delete(reservation);
+  }
+
   public Showtime validateShowtime(Long showtimeId) {
     return showtimeRepository.findById(showtimeId)
         .orElseThrow(() -> new NoResultException("해당 상영회차는 존재하지 않습니다."));
   }
 
   public Seat validateSeat(Long seatId) {
-    Seat seat =  seatRepository.findById(seatId)
+    return seatRepository.findById(seatId)
         .orElseThrow(() -> new NoResultException("해당 좌석은 존재하지 않습니다."));
+  }
 
-    if (seat.getStatus() == SeatStatus.RESERVED) {
-      throw new RuntimeException("이미 예약된 좌석입니다.");
-    }
-    return seat;
+  public Reservation validateReservation(Long reservationId) {
+    return reservationRepository.findById(reservationId)
+        .orElseThrow(() -> new NoResultException("해당 예약은 존재하지 않습니다."));
   }
 }
