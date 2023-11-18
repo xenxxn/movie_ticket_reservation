@@ -1,6 +1,8 @@
 package com.ticket.reservation.domain.reservation.service;
 
+import com.ticket.reservation.domain.reservation.dto.ReservationDto;
 import com.ticket.reservation.domain.reservation.dto.ReservationInput;
+import com.ticket.reservation.domain.reservation.dto.ReservationOutput;
 import com.ticket.reservation.domain.reservation.entity.Reservation;
 import com.ticket.reservation.domain.reservation.repository.ReservationRepository;
 import com.ticket.reservation.domain.seat.SeatStatus;
@@ -8,6 +10,7 @@ import com.ticket.reservation.domain.seat.entity.Seat;
 import com.ticket.reservation.domain.seat.repository.SeatRepository;
 import com.ticket.reservation.domain.showtime.entity.Showtime;
 import com.ticket.reservation.domain.showtime.repository.ShowtimeRepository;
+import java.util.List;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +44,19 @@ public class ReservationService {
     seat.setStatus(SeatStatus.UNRESERVED);
     seatRepository.save(seat);
     reservationRepository.delete(reservation);
+  }
+
+  public List<ReservationOutput> searchReservationsByShowtime(Long showtimeId) {
+    Showtime showtime = validateShowtime(showtimeId);
+    List<Reservation> reservations = reservationRepository.findReservationsByShowtime(showtime);
+    List<ReservationDto> reservationDtos = ReservationDto.toResponseList(reservations);
+    return ReservationOutput.toResponseList(reservationDtos);
+  }
+
+  public ReservationOutput searchSpecificReservation(Long reservationId){
+    Reservation reservation = validateReservation(reservationId);
+    ReservationDto reservationDto = ReservationDto.fromEntity(reservation);
+    return ReservationOutput.toResponse(reservationDto);
   }
 
   public Showtime validateShowtime(Long showtimeId) {
