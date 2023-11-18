@@ -36,7 +36,7 @@ public class Seat {
     @Column(name = "SEAT_ID")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ROOM_ID")
     private Room room;
 

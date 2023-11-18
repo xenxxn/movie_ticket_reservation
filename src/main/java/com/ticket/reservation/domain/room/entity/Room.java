@@ -33,7 +33,7 @@ public class Room {
     @Column(name = "ROOM_ID")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "THEATER_ID")
     private Theater theater;
 

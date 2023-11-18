@@ -29,7 +29,7 @@ public class ReservationService {
     if (!isPossibleReserved(reservationInput.getShowtimeId(), reservationInput.getSeatId())) {
       throw new RuntimeException("이미 예약된 좌석이거나 예약이 불가능한 상태입니다.");
     }
-    Reservation reservation = ReservationInput.toEntity(reservationInput);
+    Reservation reservation = Reservation.toEntity(reservationInput);
     Showtime showtime = validateShowtime(reservationInput.getShowtimeId());
     reservation.setShowtime(showtime);
     Seat seat = validateSeat(reservationInput.getSeatId());
