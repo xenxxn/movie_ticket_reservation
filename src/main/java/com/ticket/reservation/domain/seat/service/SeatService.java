@@ -41,9 +41,7 @@ public class SeatService {
   @Transactional
   public void deleteSpecificSeat(Long roomId, Long seatId) {
     Room room = validateRoom(roomId);
-    Seat seat = seatRepository.findById(seatId)
-        .orElseThrow(() -> new NoResultException("존재하지 않는 좌석입니다."));
-
+    Seat seat = validateSeat(seatId);
     room.getSeats().remove(seat);
     roomRepository.save(room);
   }
@@ -71,8 +69,7 @@ public class SeatService {
 
   @Transactional
   public SeatDto editSeat(Long seatId, SeatEditInput seatEditInput) {
-    Seat seat = seatRepository.findById(seatId)
-        .orElseThrow(() -> new NoResultException("존재하지 않는 좌석입니다."));
+    Seat seat = validateSeat(seatId);
     seat.updateSeat(seatEditInput);
     seatRepository.save(seat);
     return SeatDto.fromEntity(seat);
@@ -85,5 +82,10 @@ public class SeatService {
       throw new NoResultException("존재하지 않는 좌석입니다.");
     }
     return room;
+  }
+
+  public Seat validateSeat(Long seatId) {
+    return seatRepository.findById(seatId)
+        .orElseThrow(() -> new NoResultException("존재하지 않는 좌석입니다."));
   }
 }
