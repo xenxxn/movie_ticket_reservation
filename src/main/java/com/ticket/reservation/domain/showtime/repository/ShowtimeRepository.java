@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
-  List<Showtime> findAllByMovieIdAndTheaterId(Long movieId, Long theaterId);
+  List<Showtime> findAllByMovieIdAndRoomId(Long movieId, Long roomId);
   List<Showtime> findAllByMovieId(Long movieId);
-  List<Showtime> findAllByTheaterId(Long theaterId);
+  List<Showtime> findAllByRoomId(Long theaterId);
 }

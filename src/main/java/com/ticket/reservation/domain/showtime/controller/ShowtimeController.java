@@ -36,14 +36,14 @@ public class ShowtimeController {
     return ResponseEntity.ok(showtimeService.searchShowtimeListByMovie(movieId));
   }
 
-  @GetMapping("/theaters/{theaterId}")
-  public ResponseEntity<List<ShowtimeOutput>> searchShowtimeListByTheater(@PathVariable Long theaterId) {
-    return ResponseEntity.ok(showtimeService.searchShowtimeListByTheater(theaterId));
+  @GetMapping("/theaters/{roomId}")
+  public ResponseEntity<List<ShowtimeOutput>> searchShowtimeListByRoom(@PathVariable Long roomId) {
+    return ResponseEntity.ok(showtimeService.searchShowtimeListByRoom(roomId));
   }
 
-  @GetMapping("/movies-theaters/{movieId}/{theaterId}")
-  public ResponseEntity<List<ShowtimeOutput>> searchShowtimeByMovieAndTheater(@PathVariable Long movieId, @PathVariable Long theaterId) {
-    return ResponseEntity.ok(showtimeService.searchShowtimeByMovieAndTheater(movieId, theaterId));
+  @GetMapping("/movies-theaters/{movieId}/{roomId}")
+  public ResponseEntity<List<ShowtimeOutput>> searchShowtimeByMovieAndRoom(@PathVariable Long movieId, @PathVariable Long roomId) {
+    return ResponseEntity.ok(showtimeService.searchShowtimeByMovieAndRoom(movieId, roomId));
   }
 
   @GetMapping("/detail/{showtimeId}")
@@ -57,15 +57,15 @@ public class ShowtimeController {
     return ResponseEntity.ok(showtimeService.editShowtime(showtimeEditInput));
   }
 
-  @DeleteMapping("/{movieId}/{theaterId}")
-  public ResponseEntity<String> deleteAllShowtime(@PathVariable Long movieId, @PathVariable Long theaterId) {
-    showtimeService.deleteAllShowtime(movieId, theaterId);
+  @DeleteMapping("/{movieId}/{roomId}")
+  public ResponseEntity<String> deleteAllShowtime(@PathVariable Long movieId, @PathVariable Long roomId) {
+    showtimeService.deleteAllShowtime(movieId, roomId);
     return ResponseEntity.ok("모든 상영회차가 삭제되었습니다.");
   }
 
-  @DeleteMapping("/{movieId}/{theaterId}/{showtimeId}")
-  public ResponseEntity<String> deleteSpecificShowtime(@PathVariable Long movieId, @PathVariable Long theaterId, @PathVariable Long showtimeId) {
-    showtimeService.deleteSpecificShowtime(movieId, theaterId, showtimeId);
+  @DeleteMapping("/{movieId}/{roomId}/{showtimeId}")
+  public ResponseEntity<String> deleteSpecificShowtime(@PathVariable Long movieId, @PathVariable Long roomId, @PathVariable Long showtimeId) {
+    showtimeService.deleteSpecificShowtime(movieId, roomId, showtimeId);
     return ResponseEntity.ok("해당 상영회차가 삭제되었습니다.");
   }
 

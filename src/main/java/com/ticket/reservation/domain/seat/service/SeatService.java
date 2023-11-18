@@ -21,7 +21,7 @@ public class SeatService {
   private final RoomRepository roomRepository;
 
   @Transactional
-  public Seat createSeat(SeatInput seatInput) {
+  public Seat addSeat(SeatInput seatInput) {
     Seat seat = SeatInput.toEntity(seatInput);
     if (isExistsSeat(seat)) {
       throw new RuntimeException("이미 존재하는 좌석입니다.");

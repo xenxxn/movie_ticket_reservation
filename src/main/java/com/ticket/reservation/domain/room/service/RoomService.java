@@ -9,7 +9,6 @@ import com.ticket.reservation.domain.room.repository.RoomRepository;
 import com.ticket.reservation.domain.theater.entity.Theater;
 import com.ticket.reservation.domain.theater.repository.TheaterRepository;
 import java.util.List;
-import java.util.Optional;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class RoomService {
   private final TheaterRepository theaterRepository;
 
   @Transactional
-  public Room createRoom(RoomInput roomInput) {
+  public Room addRoom(RoomInput roomInput) {
     Room room = RoomInput.toEntity(roomInput);
     Theater theater = validateTheater(room.getTheater().getId());
     if (theater == null) {

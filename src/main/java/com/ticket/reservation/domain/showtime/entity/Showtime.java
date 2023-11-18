@@ -1,9 +1,12 @@
 package com.ticket.reservation.domain.showtime.entity;
 
 import com.ticket.reservation.domain.movie.entity.Movie;
-import com.ticket.reservation.domain.showtime.dto.ShowtimeEditInput;
-import com.ticket.reservation.domain.theater.entity.Theater;
+import com.ticket.reservation.domain.reservation.entity.Reservation;
+import com.ticket.reservation.domain.room.entity.Room;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NoResultException;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,28 +38,18 @@ public class Showtime {
     private Movie movie;
 
     @ManyToOne
-    @JoinColumn(name = "THEATER_ID")
-    private Theater theater;
+    @JoinColumn(name = "ROOM_ID")
+    private Room room;
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    public void addShowtime(Movie movie, Theater theater) {
-        this.movie = movie;
-        this.theater = theater;
-    }
-    public void updateShowtime(ShowtimeEditInput showtimeEditInput) {
-        if (showtimeEditInput.getStartTime() != null) {
-            this.startTime = showtimeEditInput.getStartTime();
-        }
-        if (showtimeEditInput.getEndTime() != null) {
-            this.endTime = showtimeEditInput.getEndTime();
-        }
-    }
+    @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Reservation> reservations = new ArrayList<>();
 
-    public void setShowtime(Movie movie, Theater theater) {
+    public void setShowtime(Movie movie, Room room) {
         this.movie = movie;
-        this.theater = theater;
+        this.room = room;
     }
 
 }
