@@ -48,7 +48,7 @@ public class Seat {
 
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
-    private SeatStatus status; //RESERVED, UNRESERVED
+    private SeatStatus status;
 
     @OneToMany(mappedBy = "seat", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
