@@ -87,9 +87,4 @@ public class Room {
         .build();
   }
 
-  public static Room toEntity(RoomOutput roomOutput) {
-    return Room.builder()
-        .name(roomOutput.getName())
-        .build();
-  }
 }

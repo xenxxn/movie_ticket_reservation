@@ -11,7 +11,9 @@ import lombok.Getter;
 @Builder
 public class RoomOutput {
 
+  private String theaterName;
   private String name;
+  private int totalSeat;
 
   public static List<RoomOutput> toResponseList(List<RoomDto> roomDtos) {
     return roomDtos.stream()
@@ -21,7 +23,9 @@ public class RoomOutput {
 
   public static RoomOutput toResponse(RoomDto roomDto) {
     return RoomOutput.builder()
+        .theaterName(roomDto.getTheaterName())
         .name(roomDto.getName())
+        .totalSeat(roomDto.getTotalSeat())
         .build();
   }
 

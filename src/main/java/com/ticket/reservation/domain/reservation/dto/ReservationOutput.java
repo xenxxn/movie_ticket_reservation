@@ -14,8 +14,6 @@ import lombok.Getter;
 public class ReservationOutput {
 
   private Long reservationId;
-  private Long showtimeId;
-  private Long seatId;
   private String theaterName;
   private String roomName;
   private ReservationStatus reservationStatus;
@@ -28,8 +26,6 @@ public class ReservationOutput {
   public static ReservationOutput toResponse(ReservationDto reservationDto) {
     return ReservationOutput.builder()
         .reservationId(reservationDto.getReservationId())
-        .showtimeId(reservationDto.getShowtimeId())
-        .seatId(reservationDto.getSeatId())
         .theaterName(reservationDto.getTheaterName())
         .roomName(reservationDto.getRoomName())
         .reservationStatus(reservationDto.getReservationStatus())

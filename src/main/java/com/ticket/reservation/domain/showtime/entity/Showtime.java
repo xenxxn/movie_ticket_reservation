@@ -71,20 +71,6 @@ public class Showtime {
     this.movie = movie;
   }
 
-  public static Showtime toEntityFromOutput(ShowtimeOutput showtimeOutput) {
-    return Showtime.builder()
-        .id(showtimeOutput.getShowtimeId())
-        .movie(Movie.builder()
-            .id(showtimeOutput.getMovieId())
-            .build())
-        .room(Room.builder()
-            .id(showtimeOutput.getRoomId())
-            .build())
-        .startTime(showtimeOutput.getStartTime())
-        .endTime(showtimeOutput.getEndTime())
-        .build();
-  }
-
 
   public static Showtime toEntityFromInput(ShowtimeInput showtimeInput) {
     Movie movie = Movie.builder().id(showtimeInput.getMovieId()).build();

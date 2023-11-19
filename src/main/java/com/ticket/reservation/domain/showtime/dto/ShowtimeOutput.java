@@ -14,18 +14,18 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ShowtimeOutput {
 
-  private Long showtimeId;
-  private Long movieId;
-  private Long roomId;
+  private String movieTitle;
+  private String movieDirector;
+  private String roomName;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
 
 
   public static ShowtimeOutput toResponse(ShowtimeDto showtimeDto) {
     return ShowtimeOutput.builder()
-        .showtimeId(showtimeDto.getId())
-        .movieId(showtimeDto.getMovieId())
-        .roomId(showtimeDto.getRoomId())
+        .movieTitle(showtimeDto.getMovieTitle())
+        .movieDirector(showtimeDto.getMovieDirector())
+        .roomName(showtimeDto.getRoomName())
         .startTime(showtimeDto.getStartTime())
         .endTime(showtimeDto.getEndTime())
         .build();

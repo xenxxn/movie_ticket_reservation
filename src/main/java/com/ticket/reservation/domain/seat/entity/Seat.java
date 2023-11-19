@@ -89,23 +89,6 @@ public class Seat {
     this.room = room;
   }
 
-  public static Seat toEntityFromDto(SeatDto seatDto) {
-    return Seat.builder()
-        .id(seatDto.getId())
-        .row(seatDto.getRow())
-        .number(seatDto.getNumber())
-        .status(seatDto.getStatus())
-        .build();
-  }
-
-  public static Seat toEntityFromOutput(SeatOutput seatOutput) {
-    return Seat.builder()
-        .row(seatOutput.getRow())
-        .number(seatOutput.getNumber())
-        .status(seatOutput.getStatus())
-        .build();
-  }
-
   public static Seat toEntityFromInput(SeatInput seatInput) {
     return Seat.builder()
         .room(Room.builder()
@@ -117,14 +100,4 @@ public class Seat {
         .build();
   }
 
-  public static Seat toEntityFromEditInput(SeatEditInput seatEditInput) {
-    Room room = Room.builder().id(seatEditInput.getRoomId()).build();
-    return Seat.builder()
-        .id(seatEditInput.getId())
-        .room(room)
-        .row(seatEditInput.getRow())
-        .number(seatEditInput.getNumber())
-        .status(seatEditInput.getStatus())
-        .build();
-  }
 }
