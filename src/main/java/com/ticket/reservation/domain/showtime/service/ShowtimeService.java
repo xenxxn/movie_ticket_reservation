@@ -1,11 +1,12 @@
 package com.ticket.reservation.domain.showtime.service;
 
+import com.ticket.reservation.domain.exception.CustomException;
+import com.ticket.reservation.domain.exception.ErrorCode;
 import com.ticket.reservation.domain.movie.entity.Movie;
 import com.ticket.reservation.domain.movie.repository.MovieRepository;
 import com.ticket.reservation.domain.room.entity.Room;
 import com.ticket.reservation.domain.room.repository.RoomRepository;
 import com.ticket.reservation.domain.seat.SeatStatus;
-import com.ticket.reservation.domain.seat.dto.SeatInput;
 import com.ticket.reservation.domain.seat.entity.Seat;
 import com.ticket.reservation.domain.seat.repository.SeatRepository;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeDto;
@@ -15,9 +16,7 @@ import com.ticket.reservation.domain.showtime.dto.ShowtimeOutput;
 import com.ticket.reservation.domain.showtime.entity.Showtime;
 import com.ticket.reservation.domain.showtime.repository.ShowtimeRepository;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,7 +39,7 @@ public class ShowtimeService {
 
     int numCount = 1;
     int rowCount = 0;
-    String[] array = new String[]{"A", "B", "C", "D", "E"};
+    String[] array = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
 
     for (int i = 0; i < seatSize; i ++) {
       Seat seat = Seat.builder()
@@ -134,22 +133,22 @@ public class ShowtimeService {
     LocalDateTime startTime = showtime.getStartTime();
     LocalDateTime endTime = showtime.getEndTime();
     if (startTime.isAfter(endTime)) {
-      throw new RuntimeException("상영 시작 시간은 종료 시간보다 이전이어야 합니다.");
+      throw new CustomException(ErrorCode.INVALID_SHOWTIME_TIMINGS);
     }
   }
 
   public Movie validateMovie(Long movieId) {
     return movieRepository.findById(movieId)
-        .orElseThrow(() -> new NoResultException("해당 영화는 존재하지 않습니다."));
+        .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXISTS_MOVIE));
   }
 
   public Room validateRoom(Long roomId) {
     return roomRepository.findById(roomId)
-        .orElseThrow(() -> new NoResultException("해당 상영관은 존재하지 않습니다."));
+        .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXISTS_ROOM));
   }
 
   public Showtime validateShowtime(Long showtimeId) {
     return showtimeRepository.findById(showtimeId)
-        .orElseThrow(() -> new NoResultException("해당 상영회차는 존재하지 않습니다."));
+        .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXISTS_SHOWTIME));
   }
 }
