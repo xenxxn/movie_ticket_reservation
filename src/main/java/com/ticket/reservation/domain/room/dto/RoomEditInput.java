@@ -16,9 +16,8 @@ import lombok.NoArgsConstructor;
 public class RoomEditInput {
   private Long id;
   private Long theaterId;
-  private Long showtimeId;
-  private Long seatId;
   private String name;
+  private int totalSeat;
 
   public static Room toEntity(RoomEditInput roomEditInput) {
     Theater theater = Theater.builder().id(roomEditInput.theaterId).build();
@@ -26,6 +25,7 @@ public class RoomEditInput {
         .id(roomEditInput.getId())
         .theater(theater)
         .name(roomEditInput.getName())
+        .totalSeat(roomEditInput.getTotalSeat())
         .build();
   }
 }

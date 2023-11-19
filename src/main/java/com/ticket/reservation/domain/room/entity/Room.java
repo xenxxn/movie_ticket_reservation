@@ -43,10 +43,10 @@ public class Room {
     @Column(name = "TOTAL_SEAT")
     private int totalSeat;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Seat> seats = new ArrayList<>();
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Showtime> showtimeList = new ArrayList<>();
 
     public void setRoom(Theater theater) {

@@ -70,25 +70,22 @@ public class RoomService {
     if (theater == null) {
       throw new NoResultException("해당 영화관은 존재하지 않습니다.");
     }
-
-    // Update and save seats
-    for (Seat seat : room.getSeats()) {
+    List<Showtime> showtimeList = searchShowtimeList(room.getId());
+    for (Showtime showtime : showtimeList) {
+      room.getShowtimeList().clear();
+      showtime.setRoom(room);
+      showtimeRepository.save(showtime);
+    }
+    List<Seat> seats = searchSeats(room.getId());
+    for (Seat seat : seats) {
+      room.getSeats().clear();
       seat.setRoom(room);
       seatRepository.save(seat);
     }
 
-    // Update and save showtimeList
-    for (Showtime showtime : room.getShowtimeList()) {
-      showtime.setRoom(room);
-      showtimeRepository.save(showtime);
-    }
-
-    // Save the updated Room instance
     roomRepository.save(room);
-
     return RoomDto.fromEntity(room);
   }
-
 
   public List<RoomOutput> searchRoomList(Long theaterId){
     validateTheater(theaterId);
