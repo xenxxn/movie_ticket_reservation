@@ -11,7 +11,8 @@
 
 
 ### ERD
-![물리적 모델링](https://github.com/xenxxn/movie_ticket_reservation/assets/122286693/8d1427f7-d676-4068-86a9-633b94e44525)
+![movie_ticket_reservation_erd](https://github.com/xenxxn/movie_ticket_reservation/assets/122286693/0f6f2275-c241-4c71-8f4d-e9723cf620cc)
+
 
 ### 사용 기술
 * JAVA 11
