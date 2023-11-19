@@ -17,6 +17,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class ReservationDto {
+
   private Long reservationId;
   private Long showtimeId;
   private Long seatId;

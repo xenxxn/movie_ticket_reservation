@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class RoomService {
+
   private final RoomRepository roomRepository;
   private final TheaterRepository theaterRepository;
   private final ShowtimeRepository showtimeRepository;
@@ -29,12 +30,12 @@ public class RoomService {
 
   @Transactional
   public Room addRoom(RoomInput roomInput) {
-    Room room = RoomInput.toEntity(roomInput);
+    Room room = Room.toEntityFromInput(roomInput);
     Theater theater = validateTheater(roomInput.getTheaterId());
     if (theater == null) {
       throw new CustomException(ErrorCode.NOT_EXISTS_THEATER);
     }
-      return roomRepository.save(room);
+    return roomRepository.save(room);
   }
 
   @Transactional
@@ -63,7 +64,7 @@ public class RoomService {
 
   @Transactional
   public RoomDto editRoom(RoomEditInput roomEditInput) {
-    Room room = RoomEditInput.toEntity(roomEditInput);
+    Room room = Room.toEntityFromEditInput(roomEditInput);
     Theater theater = validateTheater(room.getTheater().getId());
     if (theater == null) {
       throw new CustomException(ErrorCode.NOT_EXISTS_THEATER);
@@ -85,7 +86,7 @@ public class RoomService {
     return RoomDto.fromEntity(room);
   }
 
-  public List<RoomOutput> searchRoomList(Long theaterId){
+  public List<RoomOutput> searchRoomList(Long theaterId) {
     validateTheater(theaterId);
     List<Room> rooms = roomRepository.findRoomByTheaterId(theaterId);
     List<RoomDto> roomDtos = RoomDto.toResponseList(rooms);
@@ -94,7 +95,7 @@ public class RoomService {
 
   public Theater validateTheater(Long theaterId) {
     return theaterRepository.findById(theaterId)
-        .orElseThrow(() ->  new CustomException(ErrorCode.NOT_EXISTS_THEATER));
+        .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXISTS_THEATER));
   }
 
   public List<Showtime> searchShowtimeList(Long roomId) {

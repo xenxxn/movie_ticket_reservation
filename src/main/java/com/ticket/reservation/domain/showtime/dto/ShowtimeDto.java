@@ -12,13 +12,14 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class ShowtimeDto {
+
   private Long id;
   private Long movieId;
   private Long roomId;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
 
-  public static ShowtimeDto fromEntity(Showtime showtime){
+  public static ShowtimeDto fromEntity(Showtime showtime) {
     return ShowtimeDto.builder()
         .id(showtime.getId())
         .movieId(showtime.getMovie().getId())

@@ -22,4 +22,7 @@ public class MovieEditInput {
   private String runningTime;
   private LocalDate releaseDate;
   private LocalDate endDate;
+  private Long showtimeId;
+
+
 }

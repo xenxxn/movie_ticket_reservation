@@ -1,6 +1,7 @@
 package com.ticket.reservation.domain.movie.entity;
 
 import com.ticket.reservation.domain.movie.dto.MovieEditInput;
+import com.ticket.reservation.domain.movie.dto.MovieInput;
 import com.ticket.reservation.domain.showtime.entity.Showtime;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -90,6 +91,39 @@ public class Movie {
         if (movieEditInput.getEndDate() != null) {
             this.endDate = movieEditInput.getEndDate();
         }
+
+        Movie movie = Movie.toEntityFromEditInput(movieEditInput);
+        for (Showtime showtime : showtimeList) {
+            showtime.setMovie(movie);
+        }
+    }
+
+    public static Movie toEntityFromInput(MovieInput movieInput) {
+        return Movie.builder()
+            .title(movieInput.getTitle())
+            .director(movieInput.getDirector())
+            .country(movieInput.getCountry())
+            .genre(movieInput.getGenre())
+            .information(movieInput.getInformation())
+            .grade(movieInput.getGrade())
+            .runningTime(movieInput.getRunningTime())
+            .releaseDate(movieInput.getReleaseDate())
+            .endDate(movieInput.getEndDate())
+            .build();
+    }
+
+    public static Movie toEntityFromEditInput(MovieEditInput movieEditInput) {
+        return Movie.builder()
+            .title(movieEditInput.getTitle())
+            .director(movieEditInput.getDirector())
+            .country(movieEditInput.getCountry())
+            .genre(movieEditInput.getGenre())
+            .information(movieEditInput.getInformation())
+            .grade(movieEditInput.getGrade())
+            .runningTime(movieEditInput.getRunningTime())
+            .releaseDate(movieEditInput.getReleaseDate())
+            .endDate(movieEditInput.getEndDate())
+            .build();
     }
 
 }

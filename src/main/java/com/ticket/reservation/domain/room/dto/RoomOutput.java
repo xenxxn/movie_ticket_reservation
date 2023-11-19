@@ -1,6 +1,5 @@
 package com.ticket.reservation.domain.room.dto;
 
-import com.ticket.reservation.domain.room.entity.Room;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -11,13 +10,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @Builder
 public class RoomOutput {
-  private String name;
 
-  public static Room toEntity(RoomOutput roomOutput) {
-    return Room.builder()
-        .name(roomOutput.getName())
-        .build();
-  }
+  private String name;
 
   public static List<RoomOutput> toResponseList(List<RoomDto> roomDtos) {
     return roomDtos.stream()

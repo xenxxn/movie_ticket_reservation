@@ -24,14 +24,16 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ShowtimeService {
+
   private final ShowtimeRepository showtimeRepository;
   private final MovieRepository movieRepository;
   private final RoomRepository roomRepository;
   private final SeatRepository seatRepository;
+  private final String[] ROOM_ROM = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
 
   @Transactional
   public Showtime addShowtime(ShowtimeInput showtimeInput) {
-    Showtime showtime = ShowtimeInput.toEntity(showtimeInput);
+    Showtime showtime = Showtime.toEntityFromInput(showtimeInput);
     validateShowtimeTimes(showtime);
     validateMovie(showtime.getMovie().getId());
     Room room = validateRoom(showtime.getRoom().getId());
@@ -39,22 +41,21 @@ public class ShowtimeService {
 
     int numCount = 1;
     int rowCount = 0;
-    String[] array = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
 
-    for (int i = 0; i < seatSize; i ++) {
+    for (int i = 0; i < seatSize; i++) {
       Seat seat = Seat.builder()
           .room(room)
-          .row(array[rowCount])
+          .row(ROOM_ROM[rowCount])
           .number(numCount)
           .status(SeatStatus.UNRESERVED)
           .showtime(showtime)
           .build();
       seatRepository.save(seat);
 
-      if(numCount == 10){
+      if (numCount == 10) {
         numCount = 1;
         rowCount++;
-      }else {
+      } else {
         numCount++;
       }
     }
@@ -91,7 +92,7 @@ public class ShowtimeService {
 
   @Transactional
   public ShowtimeDto editShowtime(ShowtimeEditInput showtimeEditInput) {
-    Showtime showtime = ShowtimeEditInput.toEntity(showtimeEditInput);
+    Showtime showtime = Showtime.toEntityFromEditInput(showtimeEditInput);
     validateMovie(showtime.getMovie().getId());
     validateRoom(showtime.getRoom().getId());
     showtimeRepository.save(showtime);

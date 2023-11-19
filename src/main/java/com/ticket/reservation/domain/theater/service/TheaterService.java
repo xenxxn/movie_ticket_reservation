@@ -21,7 +21,7 @@ public class TheaterService {
 
   @Transactional
   public Theater addTheater(TheaterInput theaterInput) {
-    Theater theater = TheaterInput.toEntity(theaterInput);
+    Theater theater = Theater.toEntityFromInput(theaterInput);
     return theaterRepository.save(theater);
   }
 

@@ -19,13 +19,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SeatService {
+
   private final SeatRepository seatRepository;
   private final RoomRepository roomRepository;
   private final ShowtimeRepository showtimeRepository;
 
   @Transactional
   public Seat addSeat(SeatInput seatInput) {
-    Seat seat = SeatInput.toEntity(seatInput);
+    Seat seat = Seat.toEntityFromInput(seatInput);
     if (isExistsSeat(seat)) {
       throw new CustomException(ErrorCode.ALREADY_EXISTS_SEAT);
     }
@@ -35,8 +36,6 @@ public class SeatService {
     }
     return seatRepository.save(seat);
   }
-
-
 
 
   public boolean isExistsSeat(Seat seat) {
@@ -82,7 +81,7 @@ public class SeatService {
 
   public Room validateRoom(Long roomId) {
     Room room = roomRepository.findById(roomId)
-        .orElseThrow(() ->  new CustomException(ErrorCode.NOT_EXISTS_ROOM));
+        .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXISTS_ROOM));
     if (room.getSeats().isEmpty()) {
       throw new CustomException(ErrorCode.NOT_EXISTS_SEAT);
     }

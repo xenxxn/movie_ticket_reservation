@@ -1,5 +1,9 @@
 package com.ticket.reservation.domain.room.entity;
 
+import com.ticket.reservation.domain.room.dto.RoomDto;
+import com.ticket.reservation.domain.room.dto.RoomEditInput;
+import com.ticket.reservation.domain.room.dto.RoomInput;
+import com.ticket.reservation.domain.room.dto.RoomOutput;
 import com.ticket.reservation.domain.seat.entity.Seat;
 import com.ticket.reservation.domain.showtime.entity.Showtime;
 import com.ticket.reservation.domain.theater.entity.Theater;
@@ -28,28 +32,64 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Room {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ROOM_ID")
-    private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "THEATER_ID")
-    private Theater theater;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "ROOM_ID")
+  private Long id;
 
-    @Column(name = "NAME")
-    private String name;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "THEATER_ID")
+  private Theater theater;
 
-    @Column(name = "TOTAL_SEAT")
-    private int totalSeat;
+  @Column(name = "NAME")
+  private String name;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<Seat> seats = new ArrayList<>();
+  @Column(name = "TOTAL_SEAT")
+  private int totalSeat;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<Showtime> showtimeList = new ArrayList<>();
+  @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+  private List<Seat> seats = new ArrayList<>();
 
-    public void setRoom(Theater theater) {
-        this.theater = theater;
-    }
+  @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+  private List<Showtime> showtimeList = new ArrayList<>();
+
+  public void setRoom(Theater theater) {
+    this.theater = theater;
+  }
+
+  public static Room toEntity(RoomDto roomDto) {
+    return Room.builder()
+        .id(roomDto.getId())
+        .name(roomDto.getName())
+        .totalSeat(roomDto.getTotalSeat())
+        .build();
+  }
+
+  public static Room toEntityFromInput(RoomInput roomInput) {
+    Theater theater = Theater.builder()
+        .id(roomInput.getTheaterId())
+        .build();
+    return Room.builder()
+        .theater(theater)
+        .name(roomInput.getName())
+        .totalSeat(roomInput.getTotalSeat())
+        .build();
+  }
+
+  public static Room toEntityFromEditInput(RoomEditInput roomEditInput) {
+    Theater theater = Theater.builder().id(roomEditInput.getTheaterId()).build();
+    return Room.builder()
+        .id(roomEditInput.getId())
+        .theater(theater)
+        .name(roomEditInput.getName())
+        .totalSeat(roomEditInput.getTotalSeat())
+        .build();
+  }
+
+  public static Room toEntity(RoomOutput roomOutput) {
+    return Room.builder()
+        .name(roomOutput.getName())
+        .build();
+  }
 }

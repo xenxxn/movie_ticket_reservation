@@ -11,6 +11,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class TheaterOutput {
+
   private String name;
   private String location;
   private LocalTime openTime;

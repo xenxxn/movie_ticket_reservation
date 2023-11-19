@@ -25,7 +25,7 @@ public class MovieService {
 
     @Transactional
     public Movie addMovie(MovieInput movieInput) {
-        Movie movie = MovieInput.toEntity(movieInput);
+        Movie movie = Movie.toEntityFromInput(movieInput);
         return movieRepository.save(movie);
     }
 

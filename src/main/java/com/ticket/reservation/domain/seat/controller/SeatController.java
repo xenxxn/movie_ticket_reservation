@@ -22,17 +22,20 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/seats")
 public class SeatController {
+
   private final SeatService seatService;
 
   @PostMapping("/{seatId}")
-  public ResponseEntity<SeatDto> addSeat(@RequestBody SeatInput seatInput, @PathVariable Long seatId) {
+  public ResponseEntity<SeatDto> addSeat(@RequestBody SeatInput seatInput,
+      @PathVariable Long seatId) {
     Seat makeSeat = seatService.addSeat(seatInput);
     SeatDto seatDto = SeatDto.fromEntity(makeSeat);
     return ResponseEntity.ok(seatDto);
   }
 
   @DeleteMapping("/{roomId}/{seatId}")
-  public ResponseEntity<String> deleteSpecificSeat(@PathVariable Long roomId, @PathVariable Long seatId) {
+  public ResponseEntity<String> deleteSpecificSeat(@PathVariable Long roomId,
+      @PathVariable Long seatId) {
     seatService.deleteSpecificSeat(roomId, seatId);
     return ResponseEntity.ok("해당 좌석이 삭제되었습니다.");
   }
@@ -49,7 +52,8 @@ public class SeatController {
   }
 
   @PutMapping("/modification/{seatId}")
-  public ResponseEntity<SeatDto> editSeat(@PathVariable Long seatId, @RequestBody SeatEditInput seatEditInput) {
+  public ResponseEntity<SeatDto> editSeat(@PathVariable Long seatId,
+      @RequestBody SeatEditInput seatEditInput) {
     return ResponseEntity.ok(seatService.editSeat(seatId, seatEditInput));
   }
 }

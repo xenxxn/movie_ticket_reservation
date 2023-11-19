@@ -1,11 +1,11 @@
 package com.ticket.reservation.domain.theater.controller;
 
-import com.ticket.reservation.domain.theater.entity.Theater;
-import com.ticket.reservation.domain.theater.service.TheaterService;
 import com.ticket.reservation.domain.theater.dto.TheaterDto;
 import com.ticket.reservation.domain.theater.dto.TheaterEditInput;
 import com.ticket.reservation.domain.theater.dto.TheaterInput;
 import com.ticket.reservation.domain.theater.dto.TheaterOutput;
+import com.ticket.reservation.domain.theater.entity.Theater;
+import com.ticket.reservation.domain.theater.service.TheaterService;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/theaters")
 public class TheaterController {
+
   private final TheaterService theaterService;
 
   @GetMapping("/list/{searchWord}")

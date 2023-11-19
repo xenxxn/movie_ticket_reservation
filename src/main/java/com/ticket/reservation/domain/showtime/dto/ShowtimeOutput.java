@@ -1,8 +1,5 @@
 package com.ticket.reservation.domain.showtime.dto;
 
-import com.ticket.reservation.domain.movie.entity.Movie;
-import com.ticket.reservation.domain.room.entity.Room;
-import com.ticket.reservation.domain.showtime.entity.Showtime;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,25 +13,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ShowtimeOutput {
+
   private Long showtimeId;
   private Long movieId;
   private Long roomId;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
 
-  public static Showtime toEntity(ShowtimeOutput showtimeOutput) {
-    return Showtime.builder()
-        .id(showtimeOutput.getShowtimeId())
-        .movie(Movie.builder()
-            .id(showtimeOutput.getMovieId())
-            .build())
-        .room(Room.builder()
-            .id(showtimeOutput.getRoomId())
-            .build())
-        .startTime(showtimeOutput.getStartTime())
-        .endTime(showtimeOutput.getEndTime())
-        .build();
-  }
 
   public static ShowtimeOutput toResponse(ShowtimeDto showtimeDto) {
     return ShowtimeOutput.builder()

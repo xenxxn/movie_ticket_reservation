@@ -1,8 +1,6 @@
 package com.ticket.reservation.domain.reservation.dto;
 
 import com.ticket.reservation.domain.reservation.ReservationStatus;
-import com.ticket.reservation.domain.seat.entity.Seat;
-import com.ticket.reservation.domain.showtime.entity.Showtime;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Builder
 public class ReservationOutput {
+
   private Long reservationId;
   private Long showtimeId;
   private Long seatId;

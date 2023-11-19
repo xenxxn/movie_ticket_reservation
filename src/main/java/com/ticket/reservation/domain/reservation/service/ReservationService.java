@@ -59,7 +59,7 @@ public class ReservationService {
     return ReservationOutput.toResponseList(reservationDtos);
   }
 
-  public ReservationOutput searchSpecificReservation(Long reservationId){
+  public ReservationOutput searchSpecificReservation(Long reservationId) {
     Reservation reservation = validateReservation(reservationId);
     ReservationDto reservationDto = ReservationDto.fromEntity(reservation);
     return ReservationOutput.toResponse(reservationDto);
