@@ -8,6 +8,8 @@ import com.ticket.reservation.domain.seat.dto.SeatInput;
 import com.ticket.reservation.domain.seat.dto.SeatOutput;
 import com.ticket.reservation.domain.seat.entity.Seat;
 import com.ticket.reservation.domain.seat.repository.SeatRepository;
+import com.ticket.reservation.domain.showtime.entity.Showtime;
+import com.ticket.reservation.domain.showtime.repository.ShowtimeRepository;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 public class SeatService {
   private final SeatRepository seatRepository;
   private final RoomRepository roomRepository;
+  private final ShowtimeRepository showtimeRepository;
 
   @Transactional
   public Seat addSeat(SeatInput seatInput) {
@@ -32,6 +35,8 @@ public class SeatService {
     }
     return seatRepository.save(seat);
   }
+
+
 
 
   public boolean isExistsSeat(Seat seat) {

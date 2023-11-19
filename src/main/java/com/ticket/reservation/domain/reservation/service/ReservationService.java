@@ -1,5 +1,6 @@
 package com.ticket.reservation.domain.reservation.service;
 
+import com.ticket.reservation.domain.reservation.ReservationStatus;
 import com.ticket.reservation.domain.reservation.dto.ReservationDto;
 import com.ticket.reservation.domain.reservation.dto.ReservationInput;
 import com.ticket.reservation.domain.reservation.dto.ReservationOutput;
@@ -10,6 +11,7 @@ import com.ticket.reservation.domain.seat.entity.Seat;
 import com.ticket.reservation.domain.seat.repository.SeatRepository;
 import com.ticket.reservation.domain.showtime.entity.Showtime;
 import com.ticket.reservation.domain.showtime.repository.ShowtimeRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
@@ -29,7 +31,9 @@ public class ReservationService {
     if (!isPossibleReserved(reservationInput.getShowtimeId(), reservationInput.getSeatId())) {
       throw new RuntimeException("이미 예약된 좌석이거나 예약이 불가능한 상태입니다.");
     }
-    Reservation reservation = Reservation.toEntity(reservationInput);
+    Reservation reservation = Reservation.toEntityFromInput(reservationInput);
+    LocalDateTime startTime = reservation.getStartTime();
+    System.out.println("startTime = " + startTime);
     Showtime showtime = validateShowtime(reservationInput.getShowtimeId());
     reservation.setShowtime(showtime);
     Seat seat = validateSeat(reservationInput.getSeatId());
@@ -88,6 +92,17 @@ public class ReservationService {
   public Reservation validateReservation(Long reservationId) {
     return reservationRepository.findById(reservationId)
         .orElseThrow(() -> new NoResultException("해당 예약은 존재하지 않습니다."));
+  }
+
+  public void markSeatAsUnreservedWhenEndTimePassed() {
+    List<Reservation> expiredReservations = reservationRepository.findByEndTimeBeforeAndSeatStatus(
+        LocalDateTime.now(), SeatStatus.UNRESERVED);
+
+    // endTime이 지난 예약들을 UNRESERVED로 변경
+    for (Reservation reservation : expiredReservations) {
+      reservation.setReservationSeatStatus(SeatStatus.UNRESERVED);
+      reservationRepository.save(reservation);
+    }
   }
 
 }

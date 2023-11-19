@@ -6,8 +6,15 @@ import com.ticket.reservation.domain.room.dto.RoomInput;
 import com.ticket.reservation.domain.room.dto.RoomOutput;
 import com.ticket.reservation.domain.room.entity.Room;
 import com.ticket.reservation.domain.room.repository.RoomRepository;
+import com.ticket.reservation.domain.seat.entity.Seat;
+import com.ticket.reservation.domain.seat.repository.SeatRepository;
+import com.ticket.reservation.domain.showtime.dto.ShowtimeDto;
+import com.ticket.reservation.domain.showtime.dto.ShowtimeEditInput;
+import com.ticket.reservation.domain.showtime.entity.Showtime;
+import com.ticket.reservation.domain.showtime.repository.ShowtimeRepository;
 import com.ticket.reservation.domain.theater.entity.Theater;
 import com.ticket.reservation.domain.theater.repository.TheaterRepository;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
@@ -19,11 +26,13 @@ import org.springframework.stereotype.Service;
 public class RoomService {
   private final RoomRepository roomRepository;
   private final TheaterRepository theaterRepository;
+  private final ShowtimeRepository showtimeRepository;
+  private final SeatRepository seatRepository;
 
   @Transactional
   public Room addRoom(RoomInput roomInput) {
     Room room = RoomInput.toEntity(roomInput);
-    Theater theater = validateTheater(room.getTheater().getId());
+    Theater theater = validateTheater(roomInput.getTheaterId());
     if (theater == null) {
       throw new NoResultException("해당 영화관은 존재하지 않습니다.");
     }
@@ -61,9 +70,25 @@ public class RoomService {
     if (theater == null) {
       throw new NoResultException("해당 영화관은 존재하지 않습니다.");
     }
+
+    // Update and save seats
+    for (Seat seat : room.getSeats()) {
+      seat.setRoom(room);
+      seatRepository.save(seat);
+    }
+
+    // Update and save showtimeList
+    for (Showtime showtime : room.getShowtimeList()) {
+      showtime.setRoom(room);
+      showtimeRepository.save(showtime);
+    }
+
+    // Save the updated Room instance
     roomRepository.save(room);
+
     return RoomDto.fromEntity(room);
   }
+
 
   public List<RoomOutput> searchRoomList(Long theaterId){
     validateTheater(theaterId);
@@ -73,11 +98,16 @@ public class RoomService {
   }
 
   public Theater validateTheater(Long theaterId) {
-    Theater theater = theaterRepository.findById(theaterId)
+    return theaterRepository.findById(theaterId)
         .orElseThrow(() -> new NoResultException("해당 영화관은 존재하지 않습니다."));
-    if (theater.getRooms().isEmpty()) {
-      throw new NoResultException("해당 상영관은 존재하지 않습니다.");
-    }
-    return theater;
   }
+
+  public List<Showtime> searchShowtimeList(Long roomId) {
+    return showtimeRepository.findShowtimeByRoomId(roomId);
+  }
+
+  public List<Seat> searchSeats(Long roomId) {
+    return seatRepository.findAllByRoomId(roomId);
+  }
+
 }

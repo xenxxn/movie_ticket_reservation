@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoomController {
   private final RoomService roomService;
 
-  @PostMapping("/{roomId}")
-  public ResponseEntity<RoomDto> addRoom(@RequestBody RoomInput roomInput, @PathVariable Long roomId) {
+  @PostMapping()
+  public ResponseEntity<RoomDto> addRoom(@RequestBody RoomInput roomInput) {
     Room makeRoom = roomService.addRoom(roomInput);
     RoomDto roomDto = RoomDto.fromEntity(makeRoom);
     return ResponseEntity.ok(roomDto);

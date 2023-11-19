@@ -16,18 +16,22 @@ public class RoomDto {
   private Long id;
   private Long theaterId;
   private String name;
+  private int totalSeat;
 
   public static RoomDto fromEntity(Room room) {
     return RoomDto.builder()
         .id(room.getId())
         .theaterId(room.getTheater().getId())
         .name(room.getName())
+        .totalSeat(room.getTotalSeat())
         .build();
   }
 
   public static Room toEntity(RoomDto roomDto) {
     return Room.builder()
         .id(roomDto.getId())
+        .name(roomDto.getName())
+        .totalSeat(roomDto.getTotalSeat())
         .build();
   }
 

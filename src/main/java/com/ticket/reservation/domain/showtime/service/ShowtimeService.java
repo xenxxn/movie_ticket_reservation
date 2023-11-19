@@ -4,6 +4,10 @@ import com.ticket.reservation.domain.movie.entity.Movie;
 import com.ticket.reservation.domain.movie.repository.MovieRepository;
 import com.ticket.reservation.domain.room.entity.Room;
 import com.ticket.reservation.domain.room.repository.RoomRepository;
+import com.ticket.reservation.domain.seat.SeatStatus;
+import com.ticket.reservation.domain.seat.dto.SeatInput;
+import com.ticket.reservation.domain.seat.entity.Seat;
+import com.ticket.reservation.domain.seat.repository.SeatRepository;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeDto;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeEditInput;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeInput;
@@ -11,6 +15,7 @@ import com.ticket.reservation.domain.showtime.dto.ShowtimeOutput;
 import com.ticket.reservation.domain.showtime.entity.Showtime;
 import com.ticket.reservation.domain.showtime.repository.ShowtimeRepository;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
@@ -23,13 +28,37 @@ public class ShowtimeService {
   private final ShowtimeRepository showtimeRepository;
   private final MovieRepository movieRepository;
   private final RoomRepository roomRepository;
+  private final SeatRepository seatRepository;
 
   @Transactional
   public Showtime addShowtime(ShowtimeInput showtimeInput) {
     Showtime showtime = ShowtimeInput.toEntity(showtimeInput);
     validateShowtimeTimes(showtime);
     validateMovie(showtime.getMovie().getId());
-    validateRoom(showtime.getRoom().getId());
+    Room room = validateRoom(showtime.getRoom().getId());
+    int seatSize = room.getTotalSeat();
+
+    int numCount = 1;
+    int rowCount = 0;
+    String[] array = new String[]{"A", "B", "C", "D", "E"};
+
+    for (int i = 0; i < seatSize; i ++) {
+      Seat seat = Seat.builder()
+          .room(room)
+          .row(array[rowCount])
+          .number(numCount)
+          .status(SeatStatus.UNRESERVED)
+          .showtime(showtime)
+          .build();
+      seatRepository.save(seat);
+
+      if(numCount == 10){
+        numCount = 1;
+        rowCount++;
+      }else {
+        numCount++;
+      }
+    }
     return showtimeRepository.save(showtime);
   }
 

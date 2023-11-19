@@ -4,6 +4,7 @@ import com.ticket.reservation.domain.reservation.entity.Reservation;
 import com.ticket.reservation.domain.room.entity.Room;
 import com.ticket.reservation.domain.seat.SeatStatus;
 import com.ticket.reservation.domain.seat.dto.SeatEditInput;
+import com.ticket.reservation.domain.showtime.entity.Showtime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -40,6 +41,10 @@ public class Seat {
     @JoinColumn(name = "ROOM_ID")
     private Room room;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SHOWTIME_ID")
+    private Showtime showtime;
+
     @Column(name = "ROW")
     private String row;
 
@@ -74,5 +79,9 @@ public class Seat {
 
     public void setStatus(SeatStatus seatStatus) {
         this.status = seatStatus;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 }

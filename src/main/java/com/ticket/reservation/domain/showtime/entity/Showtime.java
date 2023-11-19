@@ -3,6 +3,7 @@ package com.ticket.reservation.domain.showtime.entity;
 import com.ticket.reservation.domain.movie.entity.Movie;
 import com.ticket.reservation.domain.reservation.entity.Reservation;
 import com.ticket.reservation.domain.room.entity.Room;
+import com.ticket.reservation.domain.seat.entity.Seat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +42,24 @@ public class Showtime {
     @JoinColumn(name = "ROOM_ID")
     private Room room;
 
+    @Column(name = "START_TIME")
     private LocalDateTime startTime;
+
+    @Column(name = "END_TIME")
     private LocalDateTime endTime;
+
+    @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Seat> seats = new ArrayList<>();
 
     @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Reservation> reservations = new ArrayList<>();
 
     public void setShowtime(Movie movie, Room room) {
         this.movie = movie;
+        this.room = room;
+    }
+
+    public void setRoom(Room room) {
         this.room = room;
     }
 
