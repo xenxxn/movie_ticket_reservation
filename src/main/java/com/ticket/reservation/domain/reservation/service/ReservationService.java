@@ -54,7 +54,7 @@ public class ReservationService {
 
   public List<ReservationOutput> searchReservationsByShowtime(Long showtimeId) {
     Showtime showtime = validateShowtime(showtimeId);
-    List<Reservation> reservations = reservationRepository.findReservationsByShowtime(showtime);
+    List<Reservation> reservations = reservationRepository.findReservationsByShowtimeId(showtime.getId());
     List<ReservationDto> reservationDtos = ReservationDto.toResponseList(reservations);
     return ReservationOutput.toResponseList(reservationDtos);
   }

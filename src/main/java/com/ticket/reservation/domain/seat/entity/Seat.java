@@ -100,4 +100,7 @@ public class Seat {
         .build();
   }
 
+  public void setShowtime(Showtime showtime) {
+    this.showtime = showtime;
+  }
 }

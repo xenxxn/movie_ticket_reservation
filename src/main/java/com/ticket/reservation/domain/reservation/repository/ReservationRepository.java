@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-  List<Reservation> findReservationsByShowtime(Showtime showtime);
+  List<Reservation> findReservationsByShowtimeId(Long showtimeId);
 
   List<Reservation> findByEndTimeBeforeAndSeatStatus(LocalDateTime endTime, SeatStatus status);
 

@@ -1,5 +1,7 @@
 package com.ticket.reservation.domain.showtime.service;
 
+import com.ticket.reservation.domain.reservation.entity.Reservation;
+import com.ticket.reservation.domain.reservation.repository.ReservationRepository;
 import com.ticket.reservation.global.exception.CustomException;
 import com.ticket.reservation.global.exception.ErrorCode;
 import com.ticket.reservation.domain.movie.entity.Movie;
@@ -29,6 +31,7 @@ public class ShowtimeService {
   private final MovieRepository movieRepository;
   private final RoomRepository roomRepository;
   private final SeatRepository seatRepository;
+  private final ReservationRepository reservationRepository;
   private final String[] ROOM_ROM = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
 
   @Transactional
@@ -93,11 +96,14 @@ public class ShowtimeService {
   @Transactional
   public ShowtimeDto editShowtime(ShowtimeEditInput showtimeEditInput) {
     Showtime showtime = Showtime.toEntityFromEditInput(showtimeEditInput);
-    validateMovie(showtime.getMovie().getId());
-    validateRoom(showtime.getRoom().getId());
+    Movie movie = validateMovie(showtime.getMovie().getId());
+    Room room = validateRoom(showtime.getRoom().getId());
+    showtime.setMovie(movie);
+    showtime.setRoom(room);
     showtimeRepository.save(showtime);
     return ShowtimeDto.fromEntity(showtime);
   }
+
 
 
   @Transactional
@@ -151,5 +157,13 @@ public class ShowtimeService {
   public Showtime validateShowtime(Long showtimeId) {
     return showtimeRepository.findById(showtimeId)
         .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXISTS_SHOWTIME));
+  }
+
+  public List<Reservation> searchReservations (Long showtimeId) {
+    return reservationRepository.findReservationsByShowtimeId(showtimeId);
+  }
+
+  public List<Seat> searchSeats (Long showtimeId) {
+    return seatRepository.findSeatsByShowtimeId(showtimeId);
   }
 }

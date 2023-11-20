@@ -52,10 +52,10 @@ public class Showtime {
   @Column(name = "END_TIME")
   private LocalDateTime endTime;
 
-  @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
   private List<Seat> seats = new ArrayList<>();
 
-  @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
   List<Reservation> reservations = new ArrayList<>();
 
   public void setShowtime(Movie movie, Room room) {
@@ -69,6 +69,14 @@ public class Showtime {
 
   public void setMovie(Movie movie) {
     this.movie = movie;
+  }
+
+  public void setSeats(List<Seat> seats){
+    this.seats = seats;
+  }
+
+  public void setReservations(List<Reservation> reservations) {
+    this.reservations = reservations;
   }
 
 
