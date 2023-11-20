@@ -1,7 +1,7 @@
 package com.ticket.reservation.domain.showtime.service;
 
-import com.ticket.reservation.domain.exception.CustomException;
-import com.ticket.reservation.domain.exception.ErrorCode;
+import com.ticket.reservation.global.exception.CustomException;
+import com.ticket.reservation.global.exception.ErrorCode;
 import com.ticket.reservation.domain.movie.entity.Movie;
 import com.ticket.reservation.domain.movie.repository.MovieRepository;
 import com.ticket.reservation.domain.room.entity.Room;

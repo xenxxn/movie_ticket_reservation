@@ -1,7 +1,7 @@
 package com.ticket.reservation.domain.theater.service;
 
-import com.ticket.reservation.domain.exception.CustomException;
-import com.ticket.reservation.domain.exception.ErrorCode;
+import com.ticket.reservation.global.exception.CustomException;
+import com.ticket.reservation.global.exception.ErrorCode;
 import com.ticket.reservation.domain.theater.dto.TheaterDto;
 import com.ticket.reservation.domain.theater.dto.TheaterEditInput;
 import com.ticket.reservation.domain.theater.dto.TheaterInput;

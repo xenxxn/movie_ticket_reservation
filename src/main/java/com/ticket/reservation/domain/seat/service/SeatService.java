@@ -1,7 +1,7 @@
 package com.ticket.reservation.domain.seat.service;
 
-import com.ticket.reservation.domain.exception.CustomException;
-import com.ticket.reservation.domain.exception.ErrorCode;
+import com.ticket.reservation.global.exception.CustomException;
+import com.ticket.reservation.global.exception.ErrorCode;
 import com.ticket.reservation.domain.room.entity.Room;
 import com.ticket.reservation.domain.room.repository.RoomRepository;
 import com.ticket.reservation.domain.seat.dto.SeatDto;

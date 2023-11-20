@@ -1,4 +1,4 @@
-package com.ticket.reservation.domain.exception;
+package com.ticket.reservation.global.exception;
 
 import org.springframework.http.HttpStatus;
 

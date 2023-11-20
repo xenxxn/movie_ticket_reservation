@@ -1,4 +1,4 @@
-package com.ticket.reservation.domain.exception;
+package com.ticket.reservation.global.exception;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
