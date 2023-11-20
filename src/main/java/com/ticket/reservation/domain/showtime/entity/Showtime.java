@@ -6,7 +6,6 @@ import com.ticket.reservation.domain.room.entity.Room;
 import com.ticket.reservation.domain.seat.entity.Seat;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeEditInput;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeInput;
-import com.ticket.reservation.domain.showtime.dto.ShowtimeOutput;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,15 +69,6 @@ public class Showtime {
   public void setMovie(Movie movie) {
     this.movie = movie;
   }
-
-  public void setSeats(List<Seat> seats){
-    this.seats = seats;
-  }
-
-  public void setReservations(List<Reservation> reservations) {
-    this.reservations = reservations;
-  }
-
 
   public static Showtime toEntityFromInput(ShowtimeInput showtimeInput) {
     Movie movie = Movie.builder().id(showtimeInput.getMovieId()).build();

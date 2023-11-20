@@ -1,11 +1,9 @@
 package com.ticket.reservation.domain.showtime.service;
 
-import com.ticket.reservation.domain.reservation.entity.Reservation;
-import com.ticket.reservation.domain.reservation.repository.ReservationRepository;
-import com.ticket.reservation.global.exception.CustomException;
-import com.ticket.reservation.global.exception.ErrorCode;
 import com.ticket.reservation.domain.movie.entity.Movie;
 import com.ticket.reservation.domain.movie.repository.MovieRepository;
+import com.ticket.reservation.domain.reservation.entity.Reservation;
+import com.ticket.reservation.domain.reservation.repository.ReservationRepository;
 import com.ticket.reservation.domain.room.entity.Room;
 import com.ticket.reservation.domain.room.repository.RoomRepository;
 import com.ticket.reservation.domain.seat.SeatStatus;
@@ -17,6 +15,8 @@ import com.ticket.reservation.domain.showtime.dto.ShowtimeInput;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeOutput;
 import com.ticket.reservation.domain.showtime.entity.Showtime;
 import com.ticket.reservation.domain.showtime.repository.ShowtimeRepository;
+import com.ticket.reservation.global.exception.CustomException;
+import com.ticket.reservation.global.exception.ErrorCode;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -105,7 +105,6 @@ public class ShowtimeService {
   }
 
 
-
   @Transactional
   public void deleteSpecificShowtime(Long movieId, Long roomId, Long showtimeId) {
     Movie movie = validateMovie(movieId);
@@ -159,11 +158,11 @@ public class ShowtimeService {
         .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXISTS_SHOWTIME));
   }
 
-  public List<Reservation> searchReservations (Long showtimeId) {
+  public List<Reservation> searchReservations(Long showtimeId) {
     return reservationRepository.findReservationsByShowtimeId(showtimeId);
   }
 
-  public List<Seat> searchSeats (Long showtimeId) {
+  public List<Seat> searchSeats(Long showtimeId) {
     return seatRepository.findSeatsByShowtimeId(showtimeId);
   }
 }

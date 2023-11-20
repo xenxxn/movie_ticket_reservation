@@ -1,11 +1,11 @@
 package com.ticket.reservation.domain.showtime.controller;
 
+import com.ticket.reservation.domain.showtime.dto.ShowtimeDto;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeEditInput;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeInput;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeOutput;
 import com.ticket.reservation.domain.showtime.entity.Showtime;
 import com.ticket.reservation.domain.showtime.service.ShowtimeService;
-import com.ticket.reservation.domain.showtime.dto.ShowtimeDto;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
