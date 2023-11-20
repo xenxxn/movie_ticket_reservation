@@ -23,11 +23,12 @@ public class RoomDto {
 
   public static RoomDto fromEntity(Room room) {
     Theater theater = room.getTheater();
+    String theaterName = (theater != null) ? theater.getName() : null;
     return RoomDto.builder()
         .id(room.getId())
         .theaterId(room.getTheater().getId())
-        .theaterName(theater.getName())
         .name(room.getName())
+        .theaterName(theaterName)
         .totalSeat(room.getTotalSeat())
         .build();
   }

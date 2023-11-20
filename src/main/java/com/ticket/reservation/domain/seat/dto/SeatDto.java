@@ -25,6 +25,7 @@ public class SeatDto {
         .roomId(seat.getRoom().getId())
         .row(seat.getRow())
         .number(seat.getNumber())
+        .status(seat.getStatus())
         .build();
   }
 

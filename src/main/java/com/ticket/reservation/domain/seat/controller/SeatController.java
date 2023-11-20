@@ -25,9 +25,8 @@ public class SeatController {
 
   private final SeatService seatService;
 
-  @PostMapping("/{seatId}")
-  public ResponseEntity<SeatDto> addSeat(@RequestBody SeatInput seatInput,
-      @PathVariable Long seatId) {
+  @PostMapping
+  public ResponseEntity<SeatDto> addSeat(@RequestBody SeatInput seatInput) {
     Seat makeSeat = seatService.addSeat(seatInput);
     SeatDto seatDto = SeatDto.fromEntity(makeSeat);
     return ResponseEntity.ok(seatDto);

@@ -64,6 +64,7 @@ public class SeatService {
     roomRepository.save(room);
   }
 
+  @Transactional
   public List<SeatOutput> searchSeatList(Long roomId) {
     Room room = validateRoom(roomId);
     List<Seat> seats = seatRepository.findSeatByRoomOrderByRow(room);

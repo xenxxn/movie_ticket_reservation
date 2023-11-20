@@ -38,8 +38,8 @@ public class TheaterController {
     return ResponseEntity.ok(theaterDto);
   }
 
-  @PutMapping("/modification")
-  public ResponseEntity<TheaterDto> editTheater(@RequestBody TheaterEditInput theaterEditInput) {
+  @PutMapping("/modification/{theaterId}")
+  public ResponseEntity<TheaterDto> editTheater(@PathVariable Long theaterId, @RequestBody TheaterEditInput theaterEditInput) {
     TheaterDto theaterDto = theaterService.editTheater(theaterEditInput);
     return ResponseEntity.ok(theaterDto);
   }

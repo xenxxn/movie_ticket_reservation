@@ -43,7 +43,7 @@ public class Theater {
   @Column(name = "CLOSE_TIME")
   private LocalTime closeTime;
 
-  @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
   private List<Room> rooms = new ArrayList<>();
 
   public static Theater toEntityFromInput(TheaterInput theaterInput) {
