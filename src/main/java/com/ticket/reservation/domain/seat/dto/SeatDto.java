@@ -12,6 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Builder
 public class SeatDto {
+
   private Long id;
   private Long roomId;
   private String row;
@@ -27,14 +28,6 @@ public class SeatDto {
         .build();
   }
 
-  public static Seat toEntity(SeatDto seatDto) {
-    return Seat.builder()
-        .id(seatDto.getId())
-        .row(seatDto.getRow())
-        .number(seatDto.getNumber())
-        .status(seatDto.getStatus())
-        .build();
-  }
 
   public static List<SeatDto> toResponseList(List<Seat> seats) {
     return seats.stream()

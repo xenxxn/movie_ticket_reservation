@@ -22,17 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/rooms")
 public class RoomController {
+
   private final RoomService roomService;
 
-  @PostMapping("/{roomId}")
-  public ResponseEntity<RoomDto> addRoom(@RequestBody RoomInput roomInput, @PathVariable Long roomId) {
+  @PostMapping()
+  public ResponseEntity<RoomDto> addRoom(@RequestBody RoomInput roomInput) {
     Room makeRoom = roomService.addRoom(roomInput);
     RoomDto roomDto = RoomDto.fromEntity(makeRoom);
     return ResponseEntity.ok(roomDto);
   }
 
   @DeleteMapping("/{theaterId}/{roomId}")
-  public ResponseEntity<String> deleteSpecificRoom(@PathVariable Long theaterId, @PathVariable Long roomId) {
+  public ResponseEntity<String> deleteSpecificRoom(@PathVariable Long theaterId,
+      @PathVariable Long roomId) {
     roomService.deleteSpecificRoom(theaterId, roomId);
     return ResponseEntity.ok("해당 상영관이 삭제되었습니다.");
   }
@@ -44,7 +46,8 @@ public class RoomController {
   }
 
   @PutMapping("/modification/{roomId}")
-  public ResponseEntity<RoomDto> editRoom(@PathVariable("roomId") Long roomId,@RequestBody RoomEditInput roomEditInput) {
+  public ResponseEntity<RoomDto> editRoom(@PathVariable("roomId") Long roomId,
+      @RequestBody RoomEditInput roomEditInput) {
     return ResponseEntity.ok(roomService.editRoom(roomEditInput));
   }
 

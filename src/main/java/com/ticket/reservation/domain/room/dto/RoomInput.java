@@ -1,6 +1,5 @@
 package com.ticket.reservation.domain.room.dto;
 
-import com.ticket.reservation.domain.room.entity.Room;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,11 +10,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 public class RoomInput {
-  private String name;
 
-  public static Room toEntity(RoomInput roomInput) {
-    return Room.builder()
-        .name(roomInput.getName())
-        .build();
-  }
+  private Long theaterId;
+  private String name;
+  private int totalSeat;
+
 }

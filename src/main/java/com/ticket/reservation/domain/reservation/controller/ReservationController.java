@@ -20,28 +20,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/reservation")
 @AllArgsConstructor
 public class ReservationController {
+
   private final ReservationService reservationService;
 
   @PostMapping
-  public ResponseEntity<ReservationDto> makeReservation(@RequestBody ReservationInput reservationInput) {
+  public ResponseEntity<ReservationDto> makeReservation(
+      @RequestBody ReservationInput reservationInput) {
     Reservation reservation = reservationService.makeReservation(reservationInput);
     ReservationDto reservationDto = ReservationDto.fromEntity(reservation);
     return ResponseEntity.ok(reservationDto);
   }
 
   @DeleteMapping("/{seatId}/{showtimeId}/{reservationId}")
-  public ResponseEntity<String> deleteReservation(@PathVariable Long seatId, @PathVariable Long showtimeId, @PathVariable Long reservationId) {
+  public ResponseEntity<String> deleteReservation(@PathVariable Long seatId,
+      @PathVariable Long showtimeId, @PathVariable Long reservationId) {
     reservationService.deleteReservation(seatId, showtimeId, reservationId);
     return ResponseEntity.ok("해당 예약이 삭제되었습니다.");
   }
 
   @GetMapping("/list/{showtimeId}")
-  public ResponseEntity<List<ReservationOutput>> searchReservationsByShowtime(@PathVariable Long showtimeId) {
+  public ResponseEntity<List<ReservationOutput>> searchReservationsByShowtime(
+      @PathVariable Long showtimeId) {
     return ResponseEntity.ok(reservationService.searchReservationsByShowtime(showtimeId));
   }
 
   @GetMapping("/{reservationId}")
-  public ResponseEntity<ReservationOutput> searchSpecificReservation(@PathVariable Long reservationId) {
+  public ResponseEntity<ReservationOutput> searchSpecificReservation(
+      @PathVariable Long reservationId) {
     return ResponseEntity.ok(reservationService.searchSpecificReservation(reservationId));
   }
 }

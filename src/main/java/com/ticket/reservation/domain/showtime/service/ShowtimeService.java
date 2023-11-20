@@ -1,9 +1,14 @@
 package com.ticket.reservation.domain.showtime.service;
 
+import com.ticket.reservation.global.exception.CustomException;
+import com.ticket.reservation.global.exception.ErrorCode;
 import com.ticket.reservation.domain.movie.entity.Movie;
 import com.ticket.reservation.domain.movie.repository.MovieRepository;
 import com.ticket.reservation.domain.room.entity.Room;
 import com.ticket.reservation.domain.room.repository.RoomRepository;
+import com.ticket.reservation.domain.seat.SeatStatus;
+import com.ticket.reservation.domain.seat.entity.Seat;
+import com.ticket.reservation.domain.seat.repository.SeatRepository;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeDto;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeEditInput;
 import com.ticket.reservation.domain.showtime.dto.ShowtimeInput;
@@ -12,7 +17,6 @@ import com.ticket.reservation.domain.showtime.entity.Showtime;
 import com.ticket.reservation.domain.showtime.repository.ShowtimeRepository;
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,16 +24,41 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ShowtimeService {
+
   private final ShowtimeRepository showtimeRepository;
   private final MovieRepository movieRepository;
   private final RoomRepository roomRepository;
+  private final SeatRepository seatRepository;
+  private final String[] ROOM_ROM = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
 
   @Transactional
   public Showtime addShowtime(ShowtimeInput showtimeInput) {
-    Showtime showtime = ShowtimeInput.toEntity(showtimeInput);
+    Showtime showtime = Showtime.toEntityFromInput(showtimeInput);
     validateShowtimeTimes(showtime);
     validateMovie(showtime.getMovie().getId());
-    validateRoom(showtime.getRoom().getId());
+    Room room = validateRoom(showtime.getRoom().getId());
+    int seatSize = room.getTotalSeat();
+
+    int numCount = 1;
+    int rowCount = 0;
+
+    for (int i = 0; i < seatSize; i++) {
+      Seat seat = Seat.builder()
+          .room(room)
+          .row(ROOM_ROM[rowCount])
+          .number(numCount)
+          .status(SeatStatus.UNRESERVED)
+          .showtime(showtime)
+          .build();
+      seatRepository.save(seat);
+
+      if (numCount == 10) {
+        numCount = 1;
+        rowCount++;
+      } else {
+        numCount++;
+      }
+    }
     return showtimeRepository.save(showtime);
   }
 
@@ -63,7 +92,7 @@ public class ShowtimeService {
 
   @Transactional
   public ShowtimeDto editShowtime(ShowtimeEditInput showtimeEditInput) {
-    Showtime showtime = ShowtimeEditInput.toEntity(showtimeEditInput);
+    Showtime showtime = Showtime.toEntityFromEditInput(showtimeEditInput);
     validateMovie(showtime.getMovie().getId());
     validateRoom(showtime.getRoom().getId());
     showtimeRepository.save(showtime);
@@ -105,22 +134,22 @@ public class ShowtimeService {
     LocalDateTime startTime = showtime.getStartTime();
     LocalDateTime endTime = showtime.getEndTime();
     if (startTime.isAfter(endTime)) {
-      throw new RuntimeException("상영 시작 시간은 종료 시간보다 이전이어야 합니다.");
+      throw new CustomException(ErrorCode.INVALID_SHOWTIME_TIMINGS);
     }
   }
 
   public Movie validateMovie(Long movieId) {
     return movieRepository.findById(movieId)
-        .orElseThrow(() -> new NoResultException("해당 영화는 존재하지 않습니다."));
+        .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXISTS_MOVIE));
   }
 
   public Room validateRoom(Long roomId) {
     return roomRepository.findById(roomId)
-        .orElseThrow(() -> new NoResultException("해당 상영관은 존재하지 않습니다."));
+        .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXISTS_ROOM));
   }
 
   public Showtime validateShowtime(Long showtimeId) {
     return showtimeRepository.findById(showtimeId)
-        .orElseThrow(() -> new NoResultException("해당 상영회차는 존재하지 않습니다."));
+        .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXISTS_SHOWTIME));
   }
 }

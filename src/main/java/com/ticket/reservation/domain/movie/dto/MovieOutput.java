@@ -11,6 +11,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class MovieOutput {
+
   private String title;
   private String director;
   private String country;

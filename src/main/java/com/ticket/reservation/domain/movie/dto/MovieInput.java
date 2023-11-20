@@ -22,17 +22,5 @@ public class MovieInput {
   private LocalDate releaseDate;
   private LocalDate endDate;
 
-  public static Movie toEntity(MovieInput movieInput) {
-    return Movie.builder()
-        .title(movieInput.getTitle())
-        .director(movieInput.getDirector())
-        .country(movieInput.getCountry())
-        .genre(movieInput.getGenre())
-        .information(movieInput.getInformation())
-        .grade(movieInput.getGrade())
-        .runningTime(movieInput.getRunningTime())
-        .releaseDate(movieInput.getReleaseDate())
-        .endDate(movieInput.getEndDate())
-        .build();
-  }
+
 }

@@ -10,6 +10,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class TheaterDto {
+
   private Long id;
 
   private String name;

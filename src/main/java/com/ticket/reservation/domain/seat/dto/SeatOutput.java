@@ -16,13 +16,6 @@ public class SeatOutput {
   private int number;
   private SeatStatus status;
 
-  public static Seat toEntity(SeatOutput seatOutput) {
-    return Seat.builder()
-        .row(seatOutput.getRow())
-        .number(seatOutput.getNumber())
-        .status(seatOutput.getStatus())
-        .build();
-  }
 
   public static SeatOutput toResponse(SeatDto seatDto) {
     return SeatOutput.builder()

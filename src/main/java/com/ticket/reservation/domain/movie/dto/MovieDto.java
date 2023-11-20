@@ -10,6 +10,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class MovieDto {
+
   private Long id;
   private String title;
   private String director;

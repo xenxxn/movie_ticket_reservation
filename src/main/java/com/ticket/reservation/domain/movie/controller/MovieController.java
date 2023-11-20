@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/movies")
 @RequiredArgsConstructor
 public class MovieController {
+
   private final MovieService movieService;
 
 
@@ -34,9 +35,10 @@ public class MovieController {
   }
 
   @GetMapping("/list/{title}")
-  public List<MovieOutput> movieSearchList(@PathVariable String title){
+  public List<MovieOutput> movieSearchList(@PathVariable String title) {
     return movieService.searchMovieList(title);
   }
+
   @PostMapping
   public ResponseEntity<MovieDto> addMovie(@RequestBody MovieInput movieInput) {
     Movie movie = movieService.addMovie(movieInput);
@@ -44,7 +46,8 @@ public class MovieController {
   }
 
   @PutMapping("/modification/{id}")
-  public ResponseEntity<MovieDto> editMovie(@PathVariable("id") Long id, @RequestBody MovieEditInput movieEditInput) {
+  public ResponseEntity<MovieDto> editMovie(@PathVariable("id") Long id,
+      @RequestBody MovieEditInput movieEditInput) {
     return ResponseEntity.ok(movieService.editMovie(id, movieEditInput));
   }
 

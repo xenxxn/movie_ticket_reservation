@@ -1,5 +1,7 @@
 package com.ticket.reservation.domain.seat.service;
 
+import com.ticket.reservation.global.exception.CustomException;
+import com.ticket.reservation.global.exception.ErrorCode;
 import com.ticket.reservation.domain.room.entity.Room;
 import com.ticket.reservation.domain.room.repository.RoomRepository;
 import com.ticket.reservation.domain.seat.dto.SeatDto;
@@ -8,8 +10,8 @@ import com.ticket.reservation.domain.seat.dto.SeatInput;
 import com.ticket.reservation.domain.seat.dto.SeatOutput;
 import com.ticket.reservation.domain.seat.entity.Seat;
 import com.ticket.reservation.domain.seat.repository.SeatRepository;
+import com.ticket.reservation.domain.showtime.repository.ShowtimeRepository;
 import java.util.List;
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,18 +19,20 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SeatService {
+
   private final SeatRepository seatRepository;
   private final RoomRepository roomRepository;
+  private final ShowtimeRepository showtimeRepository;
 
   @Transactional
   public Seat addSeat(SeatInput seatInput) {
-    Seat seat = SeatInput.toEntity(seatInput);
+    Seat seat = Seat.toEntityFromInput(seatInput);
     if (isExistsSeat(seat)) {
-      throw new RuntimeException("이미 존재하는 좌석입니다.");
+      throw new CustomException(ErrorCode.ALREADY_EXISTS_SEAT);
     }
     boolean isExistsRoom = roomRepository.existsById(seat.getRoom().getId());
     if (!isExistsRoom) {
-      throw new NoResultException("존재하지 않는 상영관입니다.");
+      throw new CustomException(ErrorCode.NOT_EXISTS_ROOM);
     }
     return seatRepository.save(seat);
   }
@@ -77,15 +81,15 @@ public class SeatService {
 
   public Room validateRoom(Long roomId) {
     Room room = roomRepository.findById(roomId)
-        .orElseThrow(() -> new NoResultException("해당 상영관을 찾을 수 없습니다."));
+        .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXISTS_ROOM));
     if (room.getSeats().isEmpty()) {
-      throw new NoResultException("존재하지 않는 좌석입니다.");
+      throw new CustomException(ErrorCode.NOT_EXISTS_SEAT);
     }
     return room;
   }
 
   public Seat validateSeat(Long seatId) {
     return seatRepository.findById(seatId)
-        .orElseThrow(() -> new NoResultException("존재하지 않는 좌석입니다."));
+        .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXISTS_SEAT));
   }
 }

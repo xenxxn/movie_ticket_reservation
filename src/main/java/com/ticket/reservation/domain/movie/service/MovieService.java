@@ -1,5 +1,7 @@
 package com.ticket.reservation.domain.movie.service;
 
+import com.ticket.reservation.global.exception.CustomException;
+import com.ticket.reservation.global.exception.ErrorCode;
 import com.ticket.reservation.domain.movie.dto.MovieDto;
 import com.ticket.reservation.domain.movie.dto.MovieEditInput;
 import com.ticket.reservation.domain.movie.dto.MovieInput;
@@ -7,7 +9,6 @@ import com.ticket.reservation.domain.movie.dto.MovieOutput;
 import com.ticket.reservation.domain.movie.entity.Movie;
 import com.ticket.reservation.domain.movie.repository.MovieRepository;
 import java.util.List;
-import javax.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,14 +24,14 @@ public class MovieService {
 
     @Transactional
     public Movie addMovie(MovieInput movieInput) {
-        Movie movie = MovieInput.toEntity(movieInput);
+        Movie movie = Movie.toEntityFromInput(movieInput);
         return movieRepository.save(movie);
     }
 
     public MovieOutput searchMovie(String title) {
         Movie movie = movieRepository.findByTitle(title);
         if (movie == null){
-            throw new NoResultException("검색 결과가 없습니다.");
+            throw new CustomException(ErrorCode.NOT_EXISTS_MOVIE);
         }
         MovieDto movieDto = MovieDto.fromEntity(movie);
         return MovieOutput.toResponse(movieDto);
@@ -39,7 +40,7 @@ public class MovieService {
     public List<MovieOutput> searchMovieList(String title) {
         List<MovieDto> movies = movieRepository.findByTitleContaining(title);
         if (movies.isEmpty()){
-            throw new NoResultException("검색 결과가 없습니다.");
+            throw new CustomException(ErrorCode.NOT_EXISTS_MOVIE);
         }
         return MovieOutput.toResponse(movies);
     }
@@ -61,6 +62,6 @@ public class MovieService {
 
     public Movie validateMovie(Long movieId) {
         return movieRepository.findById(movieId)
-            .orElseThrow(() -> new NoResultException("해당 영화를 찾을 수 없습니다."));
+            .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXISTS_MOVIE));
     }
 }
